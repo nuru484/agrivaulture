@@ -1,0 +1,40 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --respawn --transpile-only server.ts",
+    "start": "node build/server.js",
+    "build": "npx tsc",
+    "generate": "npx prisma migrate dev --name init"
+  },
+  "keywords": [],
+  "author": "Nurudeen Abdul-Majeed",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/multer": "^1.4.12",
+    "@types/nodemailer": "^6.4.17",
+    "prisma": "^6.6.0",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.6.0",
+    "axios": "^1.8.4",
+    "cloudinary": "^2.6.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.2.1",
+    "multer": "^1.4.5-lts.2",
+    "nodemailer": "^6.10.1",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
+    "redis": "^4.7.0"
+  }
+}
