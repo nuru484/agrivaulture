@@ -7,6 +7,6 @@ const multerConfig: Options = {
   },
 };
 
-const upload: Multer = multer(multerConfig);
+const multerUpload: Multer = multer(multerConfig);
 
-export default upload;
+export default multerUpload;
