@@ -1,6 +1,5 @@
-import dotenv from 'dotenv';
-dotenv.config();
-import { InternalServerError } from '@middlewares/error-handler';
+require('dotenv').config();
+import { InternalServerError } from '../middlewares/error-handler';
 
 export function assertEnv<T>(value: T | undefined, name: string): T {
   if (value === undefined) {

@@ -1,7 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
-import prisma from '../../config/prismaClient.js';
-import multerUpload from '@config/multer.js';
+import prisma from '../../config/prismaClient';
+import multerUpload from '../../config/multer';
+import validationMiddleware from '../../middlewares/validation-middleware';
+import { registerValidation } from '../../validations/authValidations/register-validation';
+import { handleCloudinaryUpload } from '../../middlewares/handleCloudinaryUpload';
 import {
   IUserRegistrationInput,
   IUserCreationData,
@@ -17,22 +20,16 @@ const HTTP_STATUS = {
 };
 
 /**
- * Registers a new user with the provided details
- * @param req - Express request object containing user registration data
- * @param res - Express response object
- * @param next - Express next function for error handling
+ * Controller function for user registration
  */
-const registerUser = async (
+const handleRegisterUser = async (
   req: Request<{}, {}, IUserRegistrationInput>,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  multerUpload.single('profilePicture');
-  const { ...userDetails } = req.body;
-  const profilePicture = req.file?.filename;
+  const { confirmPassword, ...userDetails } = req.body;
 
   try {
-    // Hash the password
     const hashedPassword = await bcrypt.hash(
       userDetails.password,
       BCRYPT_SALT_ROUNDS
@@ -41,16 +38,13 @@ const registerUser = async (
     // Prepare user creation data
     const userCreationData: IUserCreationData = {
       ...userDetails,
-      profilePicture,
       password: hashedPassword,
     };
 
-    // Create the new user
     const user = await prisma.user.create({
       data: userCreationData,
     });
 
-    // Exclude password from response
     const { password, ...userWithoutPassword } = user;
 
     // Send response
@@ -63,4 +57,14 @@ const registerUser = async (
   }
 };
 
-export default registerUser;
+/**
+ * Middleware array for user registration
+ */
+const registerUser = [
+  multerUpload.single('profilePicture'),
+  validationMiddleware.create(registerValidation),
+  handleCloudinaryUpload({ folder: 'User Profiles' }, 'profilePicture'),
+  handleRegisterUser,
+] as const;
+
+export { registerUser };

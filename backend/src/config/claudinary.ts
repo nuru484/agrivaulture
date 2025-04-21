@@ -4,29 +4,29 @@
  * This module provides utilities for interacting with Cloudinary API with
  * retry logic, Base64 image support, dynamic configuration, and robust error handling.
  */
-
+require('dotenv').config();
 import {
   v2 as cloudinaryBase,
   UploadApiResponse,
   UploadApiErrorResponse,
 } from 'cloudinary';
-import ENV from './env.js';
-import logger from '../utils/logger.js';
-import { assertEnv } from './env.js';
+import logger from '../utils/logger';
+import { assertEnv } from './env';
+import ENV from './env';
 import {
   ValidationError,
   InternalServerError,
   CustomError,
-} from '@middlewares/error-handler.js';
-import { isValidBase64Image } from '@utils/validate-base64-image.js';
+} from '../middlewares/error-handler';
+import { isValidBase64Image } from '../utils/validate-base64-image';
 import {
+  ICloudinaryUploadService,
   IUploadedFile,
   ICloudinaryConfig,
   ICloudinaryUploadOptions,
-  UploadResult,
+  ICloudinaryUploadResult,
   ICloudinaryDeletionResponse,
-} from 'types/cloudinary.js';
-import { ICloudinaryUploadService } from 'types/cloudinary.js';
+} from '../../types/cloudinary';
 
 // Constants
 const MAX_UPLOAD_RETRIES = 3;
@@ -87,9 +87,6 @@ const createCloudinaryInstance = (config: ICloudinaryConfig) => {
   validateConfig(config);
   const cloudinaryInstance = cloudinaryBase;
   cloudinaryInstance.config(config);
-  logger.info(
-    `Cloudinary instance configured for cloud_name: ${config.cloud_name}`
-  );
   return cloudinaryInstance;
 };
 
@@ -106,7 +103,7 @@ export const uploadToCloudinary = async (
   file: IUploadedFile | string,
   options: Partial<ICloudinaryUploadOptions> = {},
   config: ICloudinaryConfig
-): Promise<UploadResult> => {
+): Promise<ICloudinaryUploadResult> => {
   const cloudinary = createCloudinaryInstance(config);
 
   if (typeof file === 'string' && !isValidBase64Image(file)) {
@@ -268,7 +265,7 @@ export const uploadMultipleToCloudinary = async (
   files: (IUploadedFile | string)[],
   options: Partial<ICloudinaryUploadOptions> = {},
   config: ICloudinaryConfig
-): Promise<UploadResult[]> => {
+): Promise<ICloudinaryUploadResult[]> => {
   if (!files || !Array.isArray(files) || files.length === 0) {
     throw new ValidationError('No valid files provided for upload');
   }
@@ -296,7 +293,7 @@ export class CloudinaryUploadService implements ICloudinaryUploadService {
   async uploadImage(
     image: string | IUploadedFile,
     options: Partial<ICloudinaryUploadOptions> = {}
-  ): Promise<UploadResult> {
+  ): Promise<ICloudinaryUploadResult> {
     return uploadToCloudinary(image, options, this.config);
   }
 
@@ -314,6 +311,9 @@ export class CloudinaryUploadService implements ICloudinaryUploadService {
 export const createCloudinaryService = (
   config: ICloudinaryConfig
 ): ICloudinaryUploadService => {
+  if (!config.api_key || !config.cloud_name || !config.api_secret) {
+    throw new Error('Invalid Cloudinary config: missing apiKey or cloudName');
+  }
   return new CloudinaryUploadService(config);
 };
 

@@ -125,6 +125,9 @@ exports.Prisma.UserScalarFieldEnum = {
   role: 'role',
   region: 'region',
   phone: 'phone',
+  profilePicture: 'profilePicture',
+  bio: 'bio',
+  address: 'address',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -216,7 +219,8 @@ exports.Prisma.JsonNullValueFilter = {
 };
 exports.Role = exports.$Enums.Role = {
   FARMER: 'FARMER',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  USER: 'USER'
 };
 
 exports.Prisma.ModelName = {

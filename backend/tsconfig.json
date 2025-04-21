@@ -19,6 +19,10 @@
       "@validations/*": ["src/validations/*"]
     }
   },
-  "include": ["./src/**/*", "src/validations/validation-error-handler.ts", "types"],
+  "include": [
+    "./src/**/*",
+    "src/validations/validation-error-handler.ts",
+    "types"
+  ],
   "exclude": ["node_modules", "build"]
 }

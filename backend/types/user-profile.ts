@@ -1,3 +1,5 @@
+import { ICloudinaryUploadResult } from './cloudinary';
+
 export enum UserRole {
   ADMIN = 'ADMIN',
   FARMER = 'FARMER',
@@ -22,19 +24,21 @@ export interface IUserProfile {
 // Interfaces for type safety
 export interface IUserRegistrationInput {
   password: string;
+  confirmPassword: string;
   region: string;
   email: string;
   name: string;
   role: UserRole; // Enum for user roles
   phone: string;
-  profilePicture?: string | Express.Multer.File;
+  profilePicture?: string | undefined;
   bio: string;
   address: string;
 }
 
 export interface IUserCreationData
-  extends Omit<IUserRegistrationInput, 'password'> {
+  extends Omit<IUserRegistrationInput, 'password' | 'confirmPassword'> {
   password: string;
+  confirmPassword?: string;
 }
 
 export interface IUserResponseData {
@@ -46,4 +50,5 @@ export interface IUserResponseData {
   profilePicture?: string;
   bio: string;
   address: string;
+  uploadResult?: ICloudinaryUploadResult;
 }

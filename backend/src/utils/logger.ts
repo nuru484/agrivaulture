@@ -1,8 +1,10 @@
-import ENV from '@config/env';
+require('dotenv').config();
+import ENV from '../config/env';
 import pino from 'pino';
 import pretty from 'pino-pretty';
+import { assertEnv } from '../config/env';
 
-const isProduction = ENV.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 
 const logger = pino({
   level: isProduction ? 'info' : 'debug',

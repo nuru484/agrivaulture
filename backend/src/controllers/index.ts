@@ -1,3 +1,3 @@
-import registerUser from './authentication/signup';
+import { registerUser } from './authentication/register';
 
 export { registerUser };

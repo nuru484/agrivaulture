@@ -42,7 +42,7 @@ export interface ICloudinaryDeletionResponse {
 /**
  * Interface for upload result
  */
-export interface UploadResult {
+export interface ICloudinaryUploadResult {
   public_id: string;
   secure_url: string;
   asset_id?: string;
@@ -57,6 +57,6 @@ export interface ICloudinaryUploadService {
   uploadImage(
     image: string | IUploadedFile,
     options: Partial<ICloudinaryUploadOptions>
-  ): Promise<UploadResult>;
+  ): Promise<ICloudinaryUploadResult>;
   deleteImage(publicId: string): Promise<ICloudinaryDeletionResponse>;
 }

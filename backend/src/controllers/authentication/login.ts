@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { CustomError } from '@middlewares/error-handler.js';
+import { CustomError } from '@middlewares/error-handler';
 import ENV from '@config/env';
-import prisma from '@config/prismaClient.js';
+import prisma from '@config/prismaClient';
+
 import { assertEnv } from '@config/env';
 
 interface LoginRequest extends Request {
@@ -68,7 +69,7 @@ const login: AsyncHandler = asyncHandler(async function (
     }
 
     const accessToken = jwt.sign(
-      { id: user.id, role: user.role } as TokenPayload,
+      { id: Number(user.id), role: user.role } as TokenPayload,
       assertEnv(ENV.ACCESS_TOKEN_SECRET, 'ACCESS_TOKEN_SECRET'),
       {
         expiresIn: '15m',
@@ -76,17 +77,12 @@ const login: AsyncHandler = asyncHandler(async function (
     );
 
     const refreshToken = jwt.sign(
-      { userId: user.id } as RefreshTokenPayload,
+      { userId: Number(user.id) } as RefreshTokenPayload,
       assertEnv(ENV.REFRESH_TOKEN_SECRET, 'REFRESH_TOKEN_SECRET'),
       {
         expiresIn: '7d',
       }
     );
-
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { refreshToken },
-    });
 
     res.json({ message: 'Login successful', accessToken, refreshToken });
   } catch (error) {

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import logger from '@utils/logger';
-import ENV from '@config/env';
+import logger from '../utils/logger';
+import ENV from '../config/env';
 
 /**
  * Error severity levels for better logging and monitoring

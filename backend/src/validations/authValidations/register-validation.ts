@@ -1,9 +1,9 @@
 // src/validations/authValidations/signup-validation.ts
-import { validator } from '@validations/validation-factory.ts';
+import { validator } from '../../validations/validation-factory.ts';
 import { ValidationChain } from 'express-validator';
 
 // Validator for creating a new user
-export const createSignupValidation: ValidationChain[] = [
+export const registerValidation: ValidationChain[] = [
   validator.string('name', {
     required: true,
     maxLength: 100,
@@ -51,7 +51,7 @@ export const createSignupValidation: ValidationChain[] = [
 ];
 
 // Validator for updating an existing user
-export const updateSignupValidation: ValidationChain[] = [
+export const updateProfileValidation: ValidationChain[] = [
   validator.string('name', {
     required: false,
     maxLength: 100,
