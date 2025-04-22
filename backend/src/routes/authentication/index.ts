@@ -1,7 +1,13 @@
+// src/routes/authentication/index.ts
 import { Router } from 'express';
-const authenticationRouter = Router();
 import registerRoutes from './register';
+import loginRoutes from './login';
+import refreshRoutes from './refresh-token';
+
+const authenticationRouter = Router();
 
 authenticationRouter.use('/auth', registerRoutes);
+authenticationRouter.use('/auth', loginRoutes);
+authenticationRouter.use('/auth', refreshRoutes);
 
 export { authenticationRouter };

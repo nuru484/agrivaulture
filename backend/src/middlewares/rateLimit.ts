@@ -52,7 +52,7 @@ export const createRateLimiter = (
 };
 
 // Different limiters for different endpoints
-export const authLimiter = createRateLimiter(
+export const rateLimiter = createRateLimiter(
   15 * 60 * 1000, // 15 minutes
   100, // 100 requests
   'Too many authentication attempts, please try again later.'
@@ -64,4 +64,4 @@ export const passwordResetLimiter = createRateLimiter(
   'Too many password reset attempts, please try again later.'
 );
 
-export default authLimiter;
+export default rateLimiter;

@@ -1,4 +1,4 @@
-import { ICloudinaryUploadResult } from './cloudinary';
+import { ICloudinaryUploadResult } from './cloudinary.types';
 
 export enum UserRole {
   ADMIN = 'ADMIN',

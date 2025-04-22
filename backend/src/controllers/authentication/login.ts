@@ -1,93 +1,78 @@
-import { Request, Response, NextFunction } from 'express';
+// src/controllers/authentication/login.ts
+import { Response, NextFunction } from 'express';
 import { compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { CustomError } from '@middlewares/error-handler';
-import ENV from '@config/env';
-import prisma from '@config/prismaClient';
+import ENV from '../../config/env';
+import prisma from '../../config/prismaClient';
+import {
+  asyncHandler,
+  NotFoundError,
+  UnauthorizedError,
+} from '../../middlewares/error-handler';
+import { assertEnv } from '../../config/env';
+import { CookieManager } from '../../utils/CookieManager';
+import {
+  ILoginRequest,
+  ITokenPayload,
+  IRefreshTokenPayload,
+} from 'types/auth.types';
 
-import { assertEnv } from '@config/env';
+const login = asyncHandler(
+  async (
+    req: ILoginRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { email, password } = req.body;
 
-interface LoginRequest extends Request {
-  body: {
-    email: string;
-    password: string;
-  };
-}
+      const user = await prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
 
-interface TokenPayload {
-  id: number;
-  role: string;
-}
-
-interface RefreshTokenPayload {
-  userId: number;
-}
-
-interface ENV {
-  ACCESS_TOKEN_SECRET: string;
-  REFRESH_TOKEN_SECRET: string;
-}
-
-type AsyncHandler = (
-  req: LoginRequest,
-  res: Response,
-  next: NextFunction
-) => Promise<void>;
-
-const asyncHandler =
-  (fn: AsyncHandler) =>
-  (req: LoginRequest, res: Response, next: NextFunction): Promise<void> => {
-    return Promise.resolve(fn(req, res, next)).catch(next);
-  };
-
-const login: AsyncHandler = asyncHandler(async function (
-  req: LoginRequest,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    const { email, password } = req.body;
-
-    const user = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
-
-    if (!user) {
-      throw new CustomError(404, 'User not found');
-    }
-
-    if (!password || (user && !user.password)) {
-      throw new Error('Password or hash missing');
-    }
-
-    const isPasswordValid = await compare(password, user.password);
-
-    if (!isPasswordValid) {
-      throw new CustomError(401, 'Invalid credentials');
-    }
-
-    const accessToken = jwt.sign(
-      { id: Number(user.id), role: user.role } as TokenPayload,
-      assertEnv(ENV.ACCESS_TOKEN_SECRET, 'ACCESS_TOKEN_SECRET'),
-      {
-        expiresIn: '15m',
+      if (!user) {
+        throw new NotFoundError('Invalid credentials');
       }
-    );
 
-    const refreshToken = jwt.sign(
-      { userId: Number(user.id) } as RefreshTokenPayload,
-      assertEnv(ENV.REFRESH_TOKEN_SECRET, 'REFRESH_TOKEN_SECRET'),
-      {
-        expiresIn: '7d',
+      if (!password || (user && !user.password)) {
+        throw new Error('Password or hash missing');
       }
-    );
 
-    res.json({ message: 'Login successful', accessToken, refreshToken });
-  } catch (error) {
-    next(error);
+      const isPasswordValid = await compare(password, user.password);
+
+      if (!isPasswordValid) {
+        throw new UnauthorizedError('Invalid credentials');
+      }
+
+      const accessToken = jwt.sign(
+        { id: user.id, role: user.role } as ITokenPayload,
+        assertEnv(ENV.ACCESS_TOKEN_SECRET, 'ACCESS_TOKEN_SECRET'),
+        {
+          expiresIn: '15m',
+        }
+      );
+
+      const refreshToken = jwt.sign(
+        { id: user.id } as IRefreshTokenPayload,
+        assertEnv(ENV.REFRESH_TOKEN_SECRET, 'REFRESH_TOKEN_SECRET'),
+        {
+          expiresIn: '7d',
+        }
+      );
+
+      CookieManager.clearAllTokens(res);
+      CookieManager.setAccessToken(res, accessToken);
+      CookieManager.setRefreshToken(res, refreshToken);
+
+      const { password: userPassWord, ...userWithoutPassword } = user;
+
+      res.json({ message: 'Login successful', user: userWithoutPassword });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 export default login;

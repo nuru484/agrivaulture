@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { ValidationError, asyncHandler } from '../middlewares/error-handler';
-import { ICloudinaryUploadOptions } from 'types/cloudinary';
+import { ValidationError, asyncHandler } from './error-handler';
+import { ICloudinaryUploadOptions } from 'types/cloudinary.types';
 import { cloudinaryService } from '../config/claudinary';
 import { isValidBase64Image } from '../utils/validate-base64-image';
 

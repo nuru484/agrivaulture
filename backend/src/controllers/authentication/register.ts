@@ -2,14 +2,14 @@ import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import prisma from '../../config/prismaClient';
 import multerUpload from '../../config/multer';
-import validationMiddleware from '../../middlewares/validation-middleware';
+import validationMiddleware from '../../middlewares/validation';
 import { registerValidation } from '../../validations/authValidations/register-validation';
-import { handleCloudinaryUpload } from '../../middlewares/handleCloudinaryUpload';
+import { handleCloudinaryUpload } from '../../middlewares/handle-cloudinary-upload';
 import {
   IUserRegistrationInput,
   IUserCreationData,
   IUserResponseData,
-} from 'types/user-profile.js';
+} from 'types/user-profile.types.js';
 
 // Constants for configuration
 const BCRYPT_SALT_ROUNDS = 10;

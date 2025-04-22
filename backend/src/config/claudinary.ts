@@ -26,7 +26,7 @@ import {
   ICloudinaryUploadOptions,
   ICloudinaryUploadResult,
   ICloudinaryDeletionResponse,
-} from '../../types/cloudinary';
+} from '../../types/cloudinary.types';
 
 // Constants
 const MAX_UPLOAD_RETRIES = 3;
