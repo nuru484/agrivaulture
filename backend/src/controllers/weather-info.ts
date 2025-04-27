@@ -122,10 +122,10 @@ const getWeatherByDate = asyncHandler(
 
     const dateParts = dateStr.split('-').map(Number);
     if (dateParts.length !== 3 || dateParts.some(isNaN)) {
-      throw new Error('Invalid date format. Use YYYY-MM-DD');
+      throw new Error('Invalid date format. Use  DD-MM-YYYY');
     }
 
-    const [year, month, day] = dateParts;
+    const [day, month, year] = dateParts;
     const date = new Date(Date.UTC(year, month - 1, day));
     if (isNaN(date.getTime())) {
       throw new Error('Invalid date');
