@@ -7,6 +7,8 @@ import {
   UnauthorizedError,
 } from '../middlewares/error-handler';
 import { HTTP_STATUS_CODES } from '../config/constants';
+import { simplifyIWeatherData } from '../utils/simplifyWeatherData';
+import { IWeatherData } from '../../types/weather.types';
 
 /**
  * Fetch and store weather data for a region
@@ -58,7 +60,6 @@ const fetchWeather = asyncHandler(
     }
 
     const data = weatherResponse.data;
-    console.log('Weather Response:', data);
 
     const dt = new Date(data.current.dt * 1000);
     const date = new Date(
@@ -106,9 +107,14 @@ const getLatestWeather = asyncHandler(
       throw new NotFoundError(`No weather data found for region: ${region}`);
     }
 
+    if (!weather.data || typeof weather.data !== 'object') {
+      throw new Error('Invalid weather data');
+    }
+    const data = simplifyIWeatherData(weather.data as unknown as IWeatherData);
+
     res.status(HTTP_STATUS_CODES.OK).json({
       message: 'Latest weather data retrieved successfully',
-      data: weather.data,
+      data,
     });
   }
 );
@@ -144,9 +150,11 @@ const getWeatherByDate = asyncHandler(
       );
     }
 
+    const data = simplifyIWeatherData(weather.data as unknown as IWeatherData);
+
     res.status(HTTP_STATUS_CODES.OK).json({
       message: 'Weather data retrieved successfully',
-      data: weather.data,
+      data,
     });
   }
 );
