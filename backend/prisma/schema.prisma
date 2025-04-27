@@ -17,19 +17,19 @@ enum Role {
 
 // User model for farmers and extension officers
 model User {
-  id              String       @id @default(uuid())
-  name            String       @db.VarChar(100)
-  email           String       @unique @db.VarChar(255)
-  password        String       @db.VarChar(255)
-  role            Role         @default(FARMER)
-  region          String       @db.VarChar(100) // e.g., Ashanti, Greater Accra
-  phone           String       @unique @db.VarChar(20) // Phone number for SMS
-  profilePicture  String?      @db.VarChar(255) // URL to profile picture
-  bio             String?      @db.Text // Short biography or description
-  address         String?      @db.VarChar(255) // Physical address
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-  records         CropRecord[] // One-to-many with CropRecord
+  id             String       @id @default(uuid())
+  name           String       @db.VarChar(100)
+  email          String       @unique @db.VarChar(255)
+  password       String       @db.VarChar(255)
+  role           Role         @default(FARMER)
+  region         String       @db.VarChar(100) // e.g., Ashanti, Greater Accra
+  phone          String       @unique @db.VarChar(20) // Phone number for SMS
+  profilePicture String?      @db.VarChar(255) // URL to profile picture
+  bio            String?      @db.Text // Short biography or description
+  address        String?      @db.VarChar(255) // Physical address
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  records        CropRecord[] // One-to-many with CropRecord
 
   // Indexes for frequent queries
   @@index([email])
