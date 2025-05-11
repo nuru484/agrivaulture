@@ -1,11 +1,9 @@
 'use client';
-
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import SignupDialog from '@/components/authentication/SignupDialog';
+import LoginDialog from '@/components/authentication/LoginDialog';
 
 export default function Hero() {
   return (
@@ -26,16 +24,16 @@ export default function Hero() {
               experts — all in one platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-4">
-              <Button asChild size="lg" className="group">
-                <Link href="/login">
-                  Login
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
+              <LoginDialog
+                triggerProps={{
+                  size: 'lg',
+                }}
+              />
               <SignupDialog
                 triggerProps={{
                   size: 'lg',
                   variant: 'outline',
+                  className: '',
                 }}
               />
             </div>

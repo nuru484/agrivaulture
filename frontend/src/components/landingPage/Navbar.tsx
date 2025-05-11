@@ -7,13 +7,53 @@ import { Menu } from 'lucide-react';
 import Image from 'next/image';
 import { navItems } from './staticData';
 import SignupDialog from '@/components/authentication/SignupDialog';
+import LoginDialog from '@/components/authentication/LoginDialog';
+import { useDispatch } from 'react-redux';
+import { openLoginDialog, openSignupDialog } from '@/redux/authDialogSlice';
+
+const MobileNav: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({
+  setIsOpen,
+}) => {
+  const dispatch = useDispatch();
+
+  const handleLoginClick = () => {
+    setIsOpen(false);
+    dispatch(openLoginDialog());
+  };
+
+  const handleSignupClick = () => {
+    setIsOpen(false);
+    dispatch(openSignupDialog());
+  };
+
+  return (
+    <nav className="flex flex-col gap-4">
+      {navItems.map((item) => (
+        <Link
+          key={item.name}
+          href={item.href}
+          className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors"
+          onClick={() => setIsOpen(false)}
+        >
+          {item.name}
+        </Link>
+      ))}
+      <div className="flex flex-col gap-2 mt-4">
+        <Button variant="outline" onClick={handleLoginClick}>
+          Login
+        </Button>
+        <Button onClick={handleSignupClick}>Sign Up</Button>
+      </div>
+    </nav>
+  );
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
-      <div className="container mx-auto flex items-center justify-between">
+      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         <div>
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="Logo" width={100} height={100} />
@@ -38,11 +78,12 @@ const Navbar = () => {
 
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex items-center gap-4">
-          <Button asChild variant="outline" size="sm">
-            <Link href="/login">Login</Link>
-          </Button>
-
-          <SignupDialog />
+          <LoginDialog />
+          <SignupDialog
+            triggerProps={{
+              variant: 'outline',
+            }}
+          />
         </div>
 
         {/* Mobile Menu Button */}
@@ -61,34 +102,10 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
               >
                 <Image src="/logo.png" alt="Logo" width={50} height={50} />
-
                 <span className="text-lg font-bold">AgrInfo</span>
               </Link>
             </div>
-            <nav className="flex flex-col gap-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <div className="flex flex-col gap-2 mt-4">
-                <Button asChild variant="outline">
-                  <Link href="/login" onClick={() => setIsOpen(false)}>
-                    Login
-                  </Link>
-                </Button>
-                <Button asChild>
-                  <Link href="/register" onClick={() => setIsOpen(false)}>
-                    Sign Up
-                  </Link>
-                </Button>
-              </div>
-            </nav>
+            <MobileNav setIsOpen={setIsOpen} />
           </SheetContent>
         </Sheet>
       </div>
