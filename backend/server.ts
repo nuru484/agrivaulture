@@ -36,6 +36,10 @@ const corsOptions = {
       );
     }
   },
+
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS', 'PUT'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));

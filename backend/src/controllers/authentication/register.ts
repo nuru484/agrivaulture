@@ -1,3 +1,4 @@
+// src/controllers/authentication/register.ts
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import prisma from '../../config/prismaClient';
@@ -7,7 +8,6 @@ import { registerValidation } from '../../validations/authValidations/register-v
 import { handleCloudinaryUpload } from '../../middlewares/handle-cloudinary-upload';
 import {
   IUserRegistrationInput,
-  IUserCreationData,
   IUserResponseData,
 } from 'types/user-profile.types.js';
 
@@ -27,8 +27,7 @@ const handleRegisterUser = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const { confirmPassword, ...userDetails } = req.body;
-
+  const userDetails = req.body;
   try {
     const hashedPassword = await bcrypt.hash(
       userDetails.password,
@@ -36,7 +35,7 @@ const handleRegisterUser = async (
     );
 
     // Prepare user creation data
-    const userCreationData: IUserCreationData = {
+    const userCreationData: IUserRegistrationInput = {
       ...userDetails,
       password: hashedPassword,
     };
@@ -61,9 +60,7 @@ const handleRegisterUser = async (
  * Middleware array for user registration
  */
 const registerUser = [
-  multerUpload.single('profilePicture'),
   validationMiddleware.create(registerValidation),
-  handleCloudinaryUpload({ folder: 'User Profiles' }, 'profilePicture'),
   handleRegisterUser,
 ] as const;
 

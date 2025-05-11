@@ -9,11 +9,6 @@ export const registerValidation: ValidationChain[] = [
     maxLength: 100,
     customMessage: 'Name can only be a string up to 100 characters',
   }),
-  validator.email('email', {
-    required: true,
-    maxLength: 255,
-    customMessage: 'A valid email is required',
-  }),
   validator.password('password', {
     required: true,
     minLength: 5,
@@ -24,8 +19,7 @@ export const registerValidation: ValidationChain[] = [
     // requireSpecialChars: true,
     customMessage: 'Password must be a strong password',
   }),
-  validator.confirmPassword('confirmPassword', 'password'),
-  validator.enum('role', ['FARMER', 'ADMIN', 'USER'], {
+  validator.enum('role', ['FARMER', 'USER'], {
     required: true,
   }),
   validator.string('region', {
@@ -37,16 +31,6 @@ export const registerValidation: ValidationChain[] = [
     required: false,
     pattern: /^\+?[0-9]{10,15}$/,
     customMessage: 'Phone must be a valid phone number (10-15 digits)',
-  }),
-  validator.string('bio', {
-    required: false,
-    maxLength: 1000, // Reasonable limit for text field
-    customMessage: 'Bio must be a string up to 1000 characters',
-  }),
-  validator.string('address', {
-    required: false,
-    maxLength: 255,
-    customMessage: 'Address must be a string up to 255 characters',
   }),
 ];
 

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { Toaster } from 'react-hot-toast';
+import { StoreProvider } from './StoreProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,7 +29,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <StoreProvider>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            toastOptions={{
+              className: '',
+              duration: 5000,
+            }}
+          />
+          <main>{children}</main>
+        </StoreProvider>
       </body>
     </html>
   );

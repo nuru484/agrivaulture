@@ -12,14 +12,13 @@ datasource db {
 enum Role {
   FARMER
   ADMIN
-  USER
 }
 
 // User model for farmers and extension officers
 model User {
   id             String       @id @default(uuid())
   name           String       @db.VarChar(100)
-  email          String       @unique @db.VarChar(255)
+  email          String?      @unique @db.VarChar(255)
   password       String       @db.VarChar(255)
   role           Role         @default(FARMER)
   region         String       @db.VarChar(100) // e.g., Ashanti, Greater Accra

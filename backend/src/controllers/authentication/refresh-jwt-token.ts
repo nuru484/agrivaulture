@@ -8,11 +8,12 @@ import {
   CustomError,
   UnauthorizedError,
   asyncHandler,
+  NotFoundError,
 } from '../../middlewares/error-handler';
 import { IUserProfile } from 'types/user-profile.types';
 import { assertEnv } from '../../config/env';
 import { CookieManager } from '../../utils/CookieManager';
-import { userInfo } from 'os';
+import prisma from '../../config/prismaClient';
 
 /**
  * Refreshes access token using a valid refresh token
@@ -54,12 +55,8 @@ const refreshToken: (
       throw new CustomError(401, 'Invalid refresh token');
     }
 
-    console.log(`Decoded user: ${JSON.stringify(decodedUser)}`);
-
     // Check if the decoded user matches the request user
     if (!req.user || decodedUser.id !== req.user.id) {
-      console.log(`Decoded user ID: ${decodedUser?.id}`);
-      console.log(`Request user ID: ${req.user?.id}`);
       throw new UnauthorizedError('Unauthorised, user identity mismatch');
     }
 
@@ -74,19 +71,31 @@ const refreshToken: (
     const newAccessToken = jwt.sign(
       {
         id: decodedUser.id,
-        role: decodedUser.id,
+        role: decodedUser.role,
       },
       assertEnv(ENV.ACCESS_TOKEN_SECRET, 'ACCESS_TOKEN_SECRET'),
       { expiresIn: '15m' }
     );
 
     CookieManager.setAccessToken(res, newAccessToken);
-    CookieManager.setAccessToken(res, newRefreshToken);
+    CookieManager.setRefreshToken(res, newRefreshToken);
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.user.id,
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundError('Invalid credentials');
+    }
+
+    const { password: userPassWord, ...userWithoutPassword } = user;
 
     // Send tokens in response
     res.status(200).json({
-      success: true,
-      message: 'Token refreshed',
+      message: 'Token refreshed successfully',
+      data: userWithoutPassword,
     });
   }
 );

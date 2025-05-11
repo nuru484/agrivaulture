@@ -24,11 +24,11 @@ const login = asyncHandler(
     next: NextFunction
   ): Promise<void> => {
     try {
-      const { email, password } = req.body;
+      const { password, phone } = req.body;
 
       const user = await prisma.user.findUnique({
         where: {
-          email,
+          phone,
         },
       });
 

@@ -4,6 +4,6 @@ import { registerUser } from '../../controllers';
 
 const registerRoutes = Router();
 
-registerRoutes.post('/register', ...registerUser);
+registerRoutes.post('/register-user', ...registerUser);
 
 export default registerRoutes;

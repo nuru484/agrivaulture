@@ -2,15 +2,15 @@ import { Request } from 'express';
 
 export interface ILoginRequest extends Request {
   body: {
-    email: string;
     password: string;
+    phone: string;
   };
 }
 
-export interface IUserLoginInput {
-  email: string;
-  password: string;
-}
+// export interface IUserLoginInput {
+//   password: string;
+//   phone: string;
+// }
 
 export interface ITokenPayload {
   id: string;
