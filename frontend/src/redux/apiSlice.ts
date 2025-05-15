@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { userLoggedIn } from './auth/authSlice';
+import { userLoggedIn, userLoggedOut } from './auth/authSlice';
 import { apiSliceTags } from '@/types/api';
 import type { IUserRegistrationResponseData } from '@/types/auth';
 import type { IApiResponse } from '@/types/api';
@@ -18,7 +18,6 @@ export const apiSlice = createApi({
         url: 'auth/refresh-token',
         method: 'POST',
       }),
-      // unwrap your API wrapper so result.data is directly your user payload
       transformResponse: (
         response: IApiResponse<IUserRegistrationResponseData>
       ) => response.data,
@@ -27,8 +26,11 @@ export const apiSlice = createApi({
         try {
           const { data: user } = await queryFulfilled;
           dispatch(userLoggedIn({ user }));
-        } catch (err) {
+        } catch (err: unknown) {
           console.error('refreshToken failed:', err);
+          if (err && typeof err === 'object' && 'status' in err && (err as { status?: number }).status === 401) {
+            dispatch(userLoggedOut());
+          }
         }
       },
     }),

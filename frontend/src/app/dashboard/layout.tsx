@@ -6,6 +6,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import ProtectRoutes from '@/hooks/ProtectRoutes';
 
 interface AgriLayoutProps {
   children: React.ReactNode;
@@ -13,14 +14,16 @@ interface AgriLayoutProps {
 
 export default function DashboardLayout({ children }: AgriLayoutProps) {
   return (
-    <SidebarProvider>
-      <DashboardSidebar />
-      <SidebarInset>
-        <header className="flex h-16 items-center border-b px-4">
-          <SidebarTrigger className="mr-2" />
-        </header>
-        <main className="flex-1 p-6">{children}</main>
-      </SidebarInset>
-    </SidebarProvider>
+    <ProtectRoutes>
+      <SidebarProvider>
+        <DashboardSidebar />
+        <SidebarInset>
+          <header className="flex h-16 items-center border-b px-4">
+            <SidebarTrigger className="mr-2" />
+          </header>
+          <main className="flex-1 p-6">{children}</main>
+        </SidebarInset>
+      </SidebarProvider>
+    </ProtectRoutes>
   );
 }

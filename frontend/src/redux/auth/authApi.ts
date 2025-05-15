@@ -1,5 +1,5 @@
 import { apiSlice } from '../apiSlice';
-import { userLoggedIn, userLoggedOut, userRegistration } from './authSlice';
+import { userLoggedIn, userRegistration } from './authSlice';
 import {
   IUserRegistrationResponseData,
   IUserRegistrationData,
@@ -54,72 +54,7 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
-    socialAuth: builder.mutation({
-      query: ({ email, name, avatar }) => ({
-        url: 'auth/social-auth',
-        method: 'POST',
-        body: {
-          email,
-          name,
-          avatar,
-        },
-        credentials: 'include' as const,
-      }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        try {
-          const result = await queryFulfilled;
-          dispatch(
-            userLoggedIn({
-              user: result.data,
-            })
-          );
-        } catch (error: unknown) {
-          console.log(error);
-        }
-      },
-    }),
-    logOut: builder.query({
-      query: () => ({
-        url: 'auth/logout',
-        method: 'GET',
-        credentials: 'include' as const,
-      }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        try {
-          await queryFulfilled;
-          dispatch(userLoggedOut());
-        } catch (error: unknown) {
-          console.log(error);
-        }
-      },
-    }),
-
-    loadUser: builder.query({
-      query: () => ({
-        url: 'auth/me',
-        method: 'GET',
-        credentials: 'include' as const,
-      }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        try {
-          const result = await queryFulfilled;
-          const userData = result.data.data;
-          dispatch(
-            userLoggedIn({
-              user: userData,
-            })
-          );
-        } catch (error: unknown) {
-          console.log(error);
-        }
-      },
-    }),
   }),
 });
 
-export const {
-  useRegisterUserMutation,
-  useLoginMutation,
-  useSocialAuthMutation,
-  useLogOutQuery,
-} = authApi;
+export const { useRegisterUserMutation, useLoginMutation } = authApi;

@@ -9,7 +9,10 @@ import { navItems } from './staticData';
 import SignupDialog from '@/components/authentication/SignupDialog';
 import LoginDialog from '@/components/authentication/LoginDialog';
 import { useDispatch } from 'react-redux';
-import { openLoginDialog, openSignupDialog } from '@/redux/authDialogSlice';
+import {
+  openLoginDialog,
+  openSignupDialog,
+} from '@/redux/auth/authDialogSlice';
 
 const MobileNav: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({
   setIsOpen,

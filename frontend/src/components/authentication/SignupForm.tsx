@@ -28,7 +28,7 @@ import {
   openSignupDialog,
   openLoginDialog,
   selectActiveDialog,
-} from '@/redux/authDialogSlice';
+} from '@/redux/auth/authDialogSlice';
 
 interface SignupFormContentProps {
   form: UseFormReturn<ISignupFormSchema>;

@@ -44,4 +44,6 @@ export interface IUserRegistrationResponseData {
   bio: string;
   address: string;
   uploadResult?: ICloudinaryUploadResult;
+  createdAt: Date;
+  updatedAt: Date;
 }

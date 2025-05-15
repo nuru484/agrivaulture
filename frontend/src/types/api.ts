@@ -1,4 +1,4 @@
-export const apiSliceTags = [] as const;
+export const apiSliceTags = ['Weather'] as const;
 
 export interface IApiResponse<T> {
   message: string;

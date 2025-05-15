@@ -4,7 +4,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import type { EnhancedStore } from '@reduxjs/toolkit';
 import { apiSlice } from './apiSlice';
 import authReducer from './auth/authSlice';
-import authDialogReducer from './authDialogSlice';
+import authDialogReducer from './auth/authDialogSlice';
 
 export const store: EnhancedStore = configureStore({
   reducer: {
