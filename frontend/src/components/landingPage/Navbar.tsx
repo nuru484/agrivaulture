@@ -13,6 +13,7 @@ import {
   openLoginDialog,
   openSignupDialog,
 } from '@/redux/auth/authDialogSlice';
+import ModeToggleButton from '@/components/ModeToggleButton';
 
 const MobileNav: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({
   setIsOpen,
@@ -45,7 +46,6 @@ const MobileNav: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({
         <Button variant="outline" onClick={handleLoginClick}>
           Login
         </Button>
-        <Button onClick={handleSignupClick}>Sign Up</Button>
       </div>
     </nav>
   );
@@ -81,22 +81,22 @@ const Navbar = () => {
 
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex items-center gap-4">
+          <ModeToggleButton />
           <LoginDialog />
-          <SignupDialog
-            triggerProps={{
-              variant: 'outline',
-            }}
-          />
         </div>
 
         {/* Mobile Menu Button */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="md:hidden">
-            <Button variant="outline" size="icon">
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </SheetTrigger>
+          <div className="md:hidden space-x-2">
+            <ModeToggleButton />
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
+          </div>
+
           <SheetContent side="right" className="w-[300px] sm:w-[400px] p-4">
             <div className="flex justify-between items-center">
               <Link

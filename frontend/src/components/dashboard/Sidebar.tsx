@@ -64,7 +64,7 @@ export default function DashboardSidebar() {
         </SidebarMenuButton>
       </SidebarHeader>
 
-      <SidebarContent className="p-2">
+      <SidebarContent className="px-2">
         <SidebarMenu className="space-y-1.5">
           {navigationItems.map((item) => {
             const isActive =
@@ -106,7 +106,7 @@ export default function DashboardSidebar() {
         </SidebarMenuButton>
       </SidebarFooter>
 
-      <SidebarRail className="bg-sidebar-foreground/5" />
+      <SidebarRail className="bg-sidebar-foreground/5 w-1" />
     </Sidebar>
   );
 }

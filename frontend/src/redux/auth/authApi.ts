@@ -1,5 +1,5 @@
 import { apiSlice } from '../apiSlice';
-import { userLoggedIn, userRegistration } from './authSlice';
+import { userLoggedIn, userLoggedOut, userRegistration } from './authSlice';
 import {
   IUserRegistrationResponseData,
   IUserRegistrationData,
@@ -56,7 +56,24 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
+
+    logout: builder.mutation<string, void>({
+      query: () => ({
+        url: 'auth/logout',
+        method: 'POST',
+      }),
+
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          await queryFulfilled;
+          dispatch(userLoggedOut());
+        } catch (error: unknown) {
+          console.log(error);
+        }
+      },
+    }),
   }),
 });
 
-export const { useRegisterUserMutation, useLoginMutation } = authApi;
+export const { useRegisterUserMutation, useLoginMutation, useLogoutMutation } =
+  authApi;
