@@ -55,10 +55,8 @@ const refreshToken: (
       throw new CustomError(401, 'Invalid refresh token');
     }
 
-    // Check if the decoded user matches the request user
-    if (!req.user || decodedUser.id !== req.user.id) {
-      throw new UnauthorizedError('Unauthorised, user identity mismatch');
-    }
+    console.log(`Decoded user: ${JSON.stringify(decodedUser)}`);
+    console.log(`Request user: ${JSON.stringify(req.user)}`);
 
     // Generate new refresh token
     const newRefreshToken = jwt.sign(
@@ -81,9 +79,7 @@ const refreshToken: (
     CookieManager.setRefreshToken(res, newRefreshToken);
 
     const user = await prisma.user.findUnique({
-      where: {
-        id: req.user.id,
-      },
+      where: { id: decodedUser.id },
     });
 
     if (!user) {

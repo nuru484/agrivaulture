@@ -12,6 +12,15 @@ import { IWeatherData } from '../../types/weather.types';
 
 /**
  * Fetch and store weather data for a region
+ *
+ * @route POST /weather
+ * @param {string} req.body.region - The name of the region (city and country code) to fetch weather for.
+ *                                    Format must be: `"City, GHA"` for locations in Ghana.
+ *                                    Example: `"Tamale, GHA"`, `"Accra, GHA"`.
+ *                                    The country code (`GHA`) is required to ensure accurate geolocation.
+ * @returns {Object} 200 - Success message with the stored region and date.
+ * @throws {UnauthorizedError} If the user is not authenticated.
+ * @throws {Error} If the region is missing or the API call fails.
  */
 const fetchWeather = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -93,6 +102,13 @@ const fetchWeather = asyncHandler(
 
 /**
  * Get the latest weather data for a region
+ *
+ * @route GET /weather/:region
+ * @param {string} req.params.region - The name of the region to get the most recent weather data for.
+ *                                     Format must be: `"City, GHA"` for locations in Ghana.
+ *                                     Example: `"Tamale, GHA"`
+ * @returns {Object} 200 - Latest weather data for the specified region.
+ * @throws {NotFoundError} If no weather data is found for the region.
  */
 const getLatestWeather = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -121,6 +137,15 @@ const getLatestWeather = asyncHandler(
 
 /**
  * Get weather data for a region on a specific date
+ *
+ * @route GET /weather/:region/:date
+ * @param {string} req.params.region - The name of the region to look up.
+ *                                     Format must be: `"City, GHA"` for locations in Ghana.
+ *                                     Example: `"Tamale, GHA"`
+ * @param {string} req.params.date - The date to retrieve weather for, in `DD-MM-YYYY` format.
+ *                                   Example: `"11-05-2025"`
+ * @returns {Object} 200 - Weather data for the specified region and date.
+ * @throws {Error} If the date format is invalid or if no data is found for the region on that date.
  */
 const getWeatherByDate = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {

@@ -55,7 +55,7 @@ const login = asyncHandler(
       );
 
       const refreshToken = jwt.sign(
-        { id: user.id } as IRefreshTokenPayload,
+        { id: user.id, role: user.role } as IRefreshTokenPayload,
         assertEnv(ENV.REFRESH_TOKEN_SECRET, 'REFRESH_TOKEN_SECRET'),
         {
           expiresIn: '7d',
