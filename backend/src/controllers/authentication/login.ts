@@ -50,7 +50,7 @@ const login = asyncHandler(
         { id: user.id, role: user.role } as ITokenPayload,
         assertEnv(ENV.ACCESS_TOKEN_SECRET, 'ACCESS_TOKEN_SECRET'),
         {
-          expiresIn: '15m',
+          expiresIn: '7d',
         }
       );
 
@@ -58,7 +58,7 @@ const login = asyncHandler(
         { id: user.id, role: user.role } as IRefreshTokenPayload,
         assertEnv(ENV.REFRESH_TOKEN_SECRET, 'REFRESH_TOKEN_SECRET'),
         {
-          expiresIn: '7d',
+          expiresIn: '15m',
         }
       );
 

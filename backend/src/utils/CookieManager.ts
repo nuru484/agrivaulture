@@ -104,7 +104,7 @@ export class CookieManager {
    */
   public static getAccessToken(req: Request): string {
     if (!req.cookies || !req.cookies.accessToken) {
-      throw new UnauthorizedError('Access token not found', {
+      throw new UnauthorizedError('Access token not found. Please login', {
         layer: 'jwt',
         code: 'MISSING_TOKEN',
         context: { token: null },
@@ -121,7 +121,7 @@ export class CookieManager {
    */
   public static getRefreshToken(req: Request): string {
     if (!req.cookies || !req.cookies.refreshToken) {
-      throw new UnauthorizedError('Refresh token not found', {
+      throw new UnauthorizedError('Refresh token not found. Please login', {
         layer: 'jwt',
         code: 'MISSING_TOKEN',
         context: { token: null },

@@ -1,5 +1,4 @@
 // src/controllers/authentication/refreshJwtToken.ts
-
 import { Request, Response, NextFunction } from 'express';
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import ENV from '../../config/env';
@@ -55,9 +54,6 @@ const refreshToken: (
       throw new CustomError(401, 'Invalid refresh token');
     }
 
-    console.log(`Decoded user: ${JSON.stringify(decodedUser)}`);
-    console.log(`Request user: ${JSON.stringify(req.user)}`);
-
     // Generate new refresh token
     const newRefreshToken = jwt.sign(
       { id: decodedUser.id, role: decodedUser.role },
@@ -91,7 +87,7 @@ const refreshToken: (
     // Send tokens in response
     res.status(200).json({
       message: 'Token refreshed successfully',
-      data: userWithoutPassword,
+      user: userWithoutPassword,
     });
   }
 );
