@@ -71,6 +71,7 @@ const refreshToken: (
       { expiresIn: '15m' }
     );
 
+    CookieManager.clearAllTokens(res);
     CookieManager.setAccessToken(res, newAccessToken);
     CookieManager.setRefreshToken(res, newRefreshToken);
 

@@ -1,6 +1,6 @@
 // src/routes/authentication/register.ts
 import { Router } from 'express';
-import { registerUser } from '../../controllers';
+import { registerUser } from '../../controllers/authentication/index';
 
 const registerRoutes = Router();
 
