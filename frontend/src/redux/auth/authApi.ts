@@ -16,7 +16,6 @@ export const authApi = apiSlice.injectEndpoints({
         url: 'auth/register-user',
         method: 'POST',
         body: data,
-        credentials: 'include' as const,
       }),
 
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
@@ -24,7 +23,7 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
           dispatch(
             userRegistration({
-              user: result.data.data,
+              user: result.data.user,
             })
           );
         } catch (error: unknown) {
@@ -33,20 +32,23 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-    login: builder.mutation({
+    login: builder.mutation<
+      IApiResponse<IUserRegistrationResponseData>,
+      { phone: string; password: string }
+    >({
       query: (data) => ({
         url: 'auth/login',
         method: 'POST',
         body: data,
-        credentials: 'include' as const,
       }),
 
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
+
           dispatch(
             userLoggedIn({
-              user: result.data,
+              user: result.data.user,
             })
           );
         } catch (error: unknown) {

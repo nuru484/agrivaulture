@@ -10,7 +10,15 @@ const storedUser =
   typeof window !== 'undefined' ? localStorage.getItem('user') : null;
 
 const initialState: AuthState = {
-  user: storedUser ? JSON.parse(storedUser) : null,
+  user: storedUser
+    ? (() => {
+        try {
+          return JSON.parse(storedUser);
+        } catch {
+          return null;
+        }
+      })()
+    : null,
 };
 
 const authSlice = createSlice({

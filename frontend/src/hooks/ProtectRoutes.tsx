@@ -1,10 +1,9 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { useRefreshTokenMutation } from '@/redux/apiSlice';
-import { userLoggedIn, userLoggedOut } from '@/redux/auth/authSlice';
 
 interface ProtectedProps {
   children: React.ReactNode;
@@ -13,28 +12,24 @@ interface ProtectedProps {
 export default function ProtectRoutes({ children }: ProtectedProps) {
   const user = useSelector((state: RootState) => state.auth.user);
   const router = useRouter();
-  const dispatch = useDispatch();
   const [refreshToken, { isLoading }] = useRefreshTokenMutation();
+  const hasAttemptedRefresh = useRef(false);
 
+  // Initial check when component mounts
   useEffect(() => {
-    if (!user && !isLoading) {
+    if (!user && !isLoading && !hasAttemptedRefresh.current) {
+      hasAttemptedRefresh.current = true;
+      // Try to refresh token once
       refreshToken()
         .unwrap()
-        .then((response) => {
-          dispatch(userLoggedIn({ user: response }));
-        })
-        .catch(async () => {
-          dispatch(userLoggedOut());
+        .catch(() => {
+          // If refresh fails, redirect to login
           router.push('/');
         });
     }
-  }, [user, isLoading, refreshToken, dispatch, router]);
+  }, [user, isLoading, refreshToken, router]);
 
-  if (isLoading) return null;
-  if (!user) {
-    router.push('/');
-    return null;
-  }
+  if (isLoading || !user) return null;
 
   return <>{children}</>;
 }
