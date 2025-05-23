@@ -227,7 +227,7 @@ function DailyForecastCard({
         {/* Weather icon */}
         <div className="flex items-center">
           <Image
-            src={`/profile.jpg`}
+            src={`https://openweathermap.org/img/wn/${day.weather_icon}.png`}
             alt={day.weather_description}
             width={40}
             height={40}

@@ -108,7 +108,7 @@ function HourlyForecastCard({ hour }: { hour: IHourlyWeatherData }) {
         {/* Weather icon */}
         <div className="flex items-center">
           <Image
-            src={`/weather-icons/${hour.weather_icon}.png`} // Adjust path to your weather icons
+            src={`https://openweathermap.org/img/wn/${hour.weather_icon}.png`}
             alt={hour.weather_description}
             width={40}
             height={40}

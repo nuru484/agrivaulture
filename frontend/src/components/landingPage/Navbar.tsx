@@ -6,13 +6,9 @@ import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import Image from 'next/image';
 import { navItems } from './staticData';
-import SignupDialog from '@/components/authentication/SignupDialog';
 import LoginDialog from '@/components/authentication/LoginDialog';
 import { useDispatch } from 'react-redux';
-import {
-  openLoginDialog,
-  openSignupDialog,
-} from '@/redux/auth/authDialogSlice';
+import { openLoginDialog } from '@/redux/auth/authDialogSlice';
 import ModeToggleButton from '@/components/ModeToggleButton';
 
 const MobileNav: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({
@@ -23,11 +19,6 @@ const MobileNav: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({
   const handleLoginClick = () => {
     setIsOpen(false);
     dispatch(openLoginDialog());
-  };
-
-  const handleSignupClick = () => {
-    setIsOpen(false);
-    dispatch(openSignupDialog());
   };
 
   return (
