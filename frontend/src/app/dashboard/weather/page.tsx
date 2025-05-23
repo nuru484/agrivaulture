@@ -34,6 +34,7 @@ import HourlyForecast from '@/components/dashboard/weather/HourlyForecast';
 import WeatherCharts from '@/components/dashboard/weather/WeatherCharts';
 import WeatherRecommendation from '@/components/dashboard/weather/WeatherRecomdation';
 import { cn } from '@/lib/utils';
+import { extractApiErrorMessage } from '@/utils/extractApiErrorMessage';
 
 // Predefined regions for the demo
 const regions = [
@@ -73,6 +74,8 @@ export default function WeatherPage() {
     { skip: !searchDate }
   );
 
+  console.log(dateWeatherData);
+
   // Handle search submission
   const handleSearch = () => {
     setSelectedRegion(searchRegion || selectedRegion);
@@ -88,14 +91,16 @@ export default function WeatherPage() {
     }
   };
 
-  // Get the active weather data based on whether we're viewing current or searched data
-  const activeWeatherData = searchDate
-    ? dateWeatherData
-    : currentWeatherData?.data.current_weather;
   const isLoading = searchDate
     ? isLoadingDate || isFetchingDate
     : isLoadingCurrent;
+
   const error = searchDate ? dateError : currentError;
+
+  console.log('Date Error:', dateError);
+  console.log('Current Error:', currentError);
+
+  const errorMessage = extractApiErrorMessage(error);
 
   return (
     <div className="container mx-auto py-6 space-y-8">
@@ -212,7 +217,8 @@ export default function WeatherPage() {
           <Alert variant="destructive" className="mt-4">
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>
-              Failed to load weather data. Please try again later.
+              {errorMessage ||
+                'Failed to load weather data. Please try again later.'}
             </AlertDescription>
           </Alert>
         )}
@@ -230,7 +236,7 @@ export default function WeatherPage() {
         )}
 
         {/* Weather Content */}
-        {!isLoading && activeWeatherData && (
+        {!isLoading && currentWeatherData?.data && (
           <>
             <TabsContent value="current" className="space-y-6 mt-4">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -247,13 +253,13 @@ export default function WeatherPage() {
                   )}
                 </div>
               </div>
-              <WeatherCharts data={currentWeatherData?.data ?? {}} />
+              <WeatherCharts data={currentWeatherData.data ?? {}} />
             </TabsContent>
 
             <TabsContent value="hourly" className="mt-4">
               <HourlyForecast
                 data={
-                  Array.isArray(currentWeatherData?.data.hourly_forecast)
+                  Array.isArray(currentWeatherData.data.hourly_forecast)
                     ? currentWeatherData?.data.hourly_forecast
                     : []
                 }

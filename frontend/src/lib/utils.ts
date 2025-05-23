@@ -12,7 +12,14 @@ export function kelvinToCelsius(kelvin: number): number {
 
 // Format time from ISO string or timestamp
 export function formatTime(timeString: string): string {
-  const date = new Date(timeString);
+  // Preprocess to remove " at "
+  const cleanedTimeString = timeString.replace(' at ', ' ');
+  const date = new Date(cleanedTimeString);
+
+  if (isNaN(date.getTime())) {
+    return 'Invalid Date';
+  }
+
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 

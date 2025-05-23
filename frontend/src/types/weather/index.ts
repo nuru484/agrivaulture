@@ -75,3 +75,24 @@ export interface IWeatherDataResponse {
     weather_icon: string;
   }>;
 }
+
+export interface CurrentWeatherProps {
+  data: {
+    datetime: string;
+    temperature: number;
+    feels_like: number;
+    humidity: number;
+    pressure: number;
+    wind_speed: number;
+    wind_direction: number;
+    wind_gust: number;
+    cloud_coverage: number;
+    visibility: number;
+    uv_index: number;
+    sunrise: string;
+    sunset: string;
+    weather_condition: string;
+    weather_description: string;
+    weather_icon: string;
+  };
+}
