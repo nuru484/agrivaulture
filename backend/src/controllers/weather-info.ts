@@ -156,7 +156,7 @@ const getWeatherByDate = asyncHandler(
       throw new Error('Invalid date format. Use  DD-MM-YYYY');
     }
 
-    const [day, month, year] = dateParts;
+    const [year, month, day] = dateParts;
     const date = new Date(Date.UTC(year, month - 1, day));
     if (isNaN(date.getTime())) {
       throw new Error('Invalid date');
@@ -178,7 +178,7 @@ const getWeatherByDate = asyncHandler(
     const data = simplifyIWeatherData(weather.data as unknown as IWeatherData);
 
     res.status(HTTP_STATUS_CODES.OK).json({
-      message: 'Weather data retrieved successfully',
+      message: 'Weather by date data retrieved successfully',
       data,
     });
   }

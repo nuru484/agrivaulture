@@ -10,6 +10,7 @@ export const verifyAccessToken = async (
   next: NextFunction
 ) => {
   const accessToken = CookieManager.getAccessToken(req);
+
   if (!accessToken) {
     return next();
   }
