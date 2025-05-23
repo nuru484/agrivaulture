@@ -13,18 +13,18 @@ import { Mutex } from 'async-mutex';
 // Create a mutex to prevent multiple refresh token calls
 const mutex = new Mutex();
 
+// Create the base query instance once to ensure consistency
+const baseQuery = fetchBaseQuery({
+  baseUrl: process.env.NEXT_PUBLIC_SERVER_URI,
+  credentials: 'include' as const,
+});
+
 // Create a wrapper for the baseQuery
 const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  // Get the base query instance
-  const baseQuery = fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_SERVER_URI,
-    credentials: 'include' as const,
-  });
-
   // Execute the base query
   let result = await baseQuery(args, api, extraOptions);
 
