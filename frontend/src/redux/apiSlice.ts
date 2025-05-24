@@ -15,7 +15,7 @@ const mutex = new Mutex();
 
 // Create the base query instance once to ensure consistency
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_SERVER_URI,
+  baseUrl: `${process.env.NEXT_PUBLIC_SERVER_URI}/api/v1`,
   credentials: 'include' as const,
 });
 
