@@ -15,7 +15,7 @@ class CookieManager {
     static defaultOptions = {
         httpOnly: true,
         secure: env_1.default.NODE_ENV === 'production',
-        // sameSite: 'strict',
+        sameSite: 'none',
         path: '/',
     };
     // Specific configurations for different token types
