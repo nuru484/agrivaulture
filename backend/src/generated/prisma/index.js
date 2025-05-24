@@ -218,7 +218,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/nuru/repos/agrivaulture/backend/generated/prisma",
+      "value": "/home/nuru/repos/agrivaulture/backend/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -237,16 +237,16 @@ const config = {
   },
   "relativeEnvPaths": {
     "rootEnvPath": null,
-    "schemaEnvPath": "../../.env"
+    "schemaEnvPath": "../../../.env"
   },
-  "relativePath": "../../prisma",
+  "relativePath": "../../../prisma",
   "clientVersion": "6.8.2",
   "engineVersion": "2060c79ba17c6bb9f5823312b6f6b7f4a845738e",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": true,
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -255,8 +255,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// Role enum for User\nenum Role {\n  FARMER\n  ADMIN\n}\n\n// User model for farmers and extension officers\nmodel User {\n  id             String       @id @default(uuid())\n  name           String       @db.VarChar(100)\n  email          String?      @unique @db.VarChar(255)\n  password       String       @db.VarChar(255)\n  role           Role         @default(FARMER)\n  region         String       @db.VarChar(100) // e.g., Ashanti, Greater Accra\n  phone          String       @unique @db.VarChar(20) // Phone number for SMS\n  profilePicture String?      @db.VarChar(255) // URL to profile picture\n  bio            String?      @db.Text // Short biography or description\n  address        String?      @db.VarChar(255) // Physical address\n  createdAt      DateTime     @default(now())\n  updatedAt      DateTime     @updatedAt\n  records        CropRecord[] // One-to-many with CropRecord\n\n  // Indexes for frequent queries\n  @@index([email])\n  @@index([phone])\n  @@index([region])\n}\n\n// CropRecord model for tracking crop cycles, expenses, and yields\nmodel CropRecord {\n  id             String    @id @default(uuid())\n  userId         String\n  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)\n  cropType       String    @db.VarChar(50) // e.g., Maize, Rice\n  plantingDate   DateTime\n  harvestingDate DateTime? // Optional, as harvest may not yet occur\n  notes          String?   @db.Text // Free-text notes\n  expenses       Expense[] // One-to-many with Expense\n  yields         Yield[] // One-to-many with Yield\n  createdAt      DateTime  @default(now())\n  updatedAt      DateTime  @updatedAt\n\n  // Indexes for frequent queries\n  @@index([userId])\n  @@index([cropType])\n  @@index([plantingDate])\n}\n\n// Expense model for logging costs associated with a crop cycle\nmodel Expense {\n  id           String     @id @default(uuid())\n  cropRecordId String\n  cropRecord   CropRecord @relation(fields: [cropRecordId], references: [id], onDelete: Cascade)\n  item         String     @db.VarChar(100) // e.g., Fertilizer, Labor\n  cost         Float      @db.DoublePrecision // Cost in local currency (e.g., GHS)\n  date         DateTime\n  createdAt    DateTime   @default(now())\n  updatedAt    DateTime   @updatedAt\n\n  // Indexes for frequent queries\n  @@index([cropRecordId])\n  @@index([date])\n}\n\n// Yield model for logging harvest quantities\nmodel Yield {\n  id           String     @id @default(uuid())\n  cropRecordId String\n  cropRecord   CropRecord @relation(fields: [cropRecordId], references: [id], onDelete: Cascade)\n  quantity     Float      @db.DoublePrecision // e.g., 500 (in kg, tons, etc.)\n  unit         String     @db.VarChar(20) // e.g., kg, tons\n  date         DateTime\n  createdAt    DateTime   @default(now())\n  updatedAt    DateTime   @updatedAt\n\n  // Indexes for frequent queries\n  @@index([cropRecordId])\n  @@index([date])\n}\n\n// MarketPrice model for storing crop market prices\nmodel MarketPrice {\n  id        String   @id @default(uuid())\n  crop      String   @db.VarChar(50) // e.g., Maize, Rice\n  region    String   @db.VarChar(100) // e.g., Ashanti\n  price     Float    @db.DoublePrecision // Price per unit\n  unit      String   @db.VarChar(20) // e.g., kg, bag\n  date      DateTime\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Ensure unique price data per crop, region, and date\n  @@unique([crop, region, date])\n  // Indexes for frequent queries\n  @@index([crop])\n  @@index([region])\n  @@index([date])\n}\n\n// FarmingTip model for region-specific farming advice\nmodel FarmingTip {\n  id        String   @id @default(uuid())\n  tip       String   @db.Text // The actual tip content\n  crop      String?  @db.VarChar(50) // Optional, e.g., Maize\n  region    String?  @db.VarChar(100) // Optional, e.g., Ashanti\n  date      DateTime\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Indexes for frequent queries\n  @@index([crop])\n  @@index([region])\n  @@index([date])\n}\n\n// Weather model for caching weather data (optional, depending on API usage)\nmodel Weather {\n  id        String   @id @default(uuid())\n  region    String   @db.VarChar(100) // e.g., Ashanti\n  data      Json // JSON data from weather API (current, forecast)\n  date      DateTime\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Ensure unique weather data per region and date\n  @@unique([region, date])\n  // Indexes for frequent queries\n  @@index([region])\n  @@index([date])\n}\n",
-  "inlineSchemaHash": "600c5c73a4c2ee4a73460e76a6263593d05fd29b6cdd59f125ecdd3f9ee1e7f8",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// Role enum for User\nenum Role {\n  FARMER\n  ADMIN\n}\n\n// User model for farmers and extension officers\nmodel User {\n  id             String       @id @default(uuid())\n  name           String       @db.VarChar(100)\n  email          String?      @unique @db.VarChar(255)\n  password       String       @db.VarChar(255)\n  role           Role         @default(FARMER)\n  region         String       @db.VarChar(100) // e.g., Ashanti, Greater Accra\n  phone          String       @unique @db.VarChar(20) // Phone number for SMS\n  profilePicture String?      @db.VarChar(255) // URL to profile picture\n  bio            String?      @db.Text // Short biography or description\n  address        String?      @db.VarChar(255) // Physical address\n  createdAt      DateTime     @default(now())\n  updatedAt      DateTime     @updatedAt\n  records        CropRecord[] // One-to-many with CropRecord\n\n  // Indexes for frequent queries\n  @@index([email])\n  @@index([phone])\n  @@index([region])\n}\n\n// CropRecord model for tracking crop cycles, expenses, and yields\nmodel CropRecord {\n  id             String    @id @default(uuid())\n  userId         String\n  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)\n  cropType       String    @db.VarChar(50) // e.g., Maize, Rice\n  plantingDate   DateTime\n  harvestingDate DateTime? // Optional, as harvest may not yet occur\n  notes          String?   @db.Text // Free-text notes\n  expenses       Expense[] // One-to-many with Expense\n  yields         Yield[] // One-to-many with Yield\n  createdAt      DateTime  @default(now())\n  updatedAt      DateTime  @updatedAt\n\n  // Indexes for frequent queries\n  @@index([userId])\n  @@index([cropType])\n  @@index([plantingDate])\n}\n\n// Expense model for logging costs associated with a crop cycle\nmodel Expense {\n  id           String     @id @default(uuid())\n  cropRecordId String\n  cropRecord   CropRecord @relation(fields: [cropRecordId], references: [id], onDelete: Cascade)\n  item         String     @db.VarChar(100) // e.g., Fertilizer, Labor\n  cost         Float      @db.DoublePrecision // Cost in local currency (e.g., GHS)\n  date         DateTime\n  createdAt    DateTime   @default(now())\n  updatedAt    DateTime   @updatedAt\n\n  // Indexes for frequent queries\n  @@index([cropRecordId])\n  @@index([date])\n}\n\n// Yield model for logging harvest quantities\nmodel Yield {\n  id           String     @id @default(uuid())\n  cropRecordId String\n  cropRecord   CropRecord @relation(fields: [cropRecordId], references: [id], onDelete: Cascade)\n  quantity     Float      @db.DoublePrecision // e.g., 500 (in kg, tons, etc.)\n  unit         String     @db.VarChar(20) // e.g., kg, tons\n  date         DateTime\n  createdAt    DateTime   @default(now())\n  updatedAt    DateTime   @updatedAt\n\n  // Indexes for frequent queries\n  @@index([cropRecordId])\n  @@index([date])\n}\n\n// MarketPrice model for storing crop market prices\nmodel MarketPrice {\n  id        String   @id @default(uuid())\n  crop      String   @db.VarChar(50) // e.g., Maize, Rice\n  region    String   @db.VarChar(100) // e.g., Ashanti\n  price     Float    @db.DoublePrecision // Price per unit\n  unit      String   @db.VarChar(20) // e.g., kg, bag\n  date      DateTime\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Ensure unique price data per crop, region, and date\n  @@unique([crop, region, date])\n  // Indexes for frequent queries\n  @@index([crop])\n  @@index([region])\n  @@index([date])\n}\n\n// FarmingTip model for region-specific farming advice\nmodel FarmingTip {\n  id        String   @id @default(uuid())\n  tip       String   @db.Text // The actual tip content\n  crop      String?  @db.VarChar(50) // Optional, e.g., Maize\n  region    String?  @db.VarChar(100) // Optional, e.g., Ashanti\n  date      DateTime\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Indexes for frequent queries\n  @@index([crop])\n  @@index([region])\n  @@index([date])\n}\n\n// Weather model for caching weather data (optional, depending on API usage)\nmodel Weather {\n  id        String   @id @default(uuid())\n  region    String   @db.VarChar(100) // e.g., Ashanti\n  data      Json // JSON data from weather API (current, forecast)\n  date      DateTime\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Ensure unique weather data per region and date\n  @@unique([region, date])\n  // Indexes for frequent queries\n  @@index([region])\n  @@index([date])\n}\n",
+  "inlineSchemaHash": "d02b1c1c086660acad904059cc658fc4620b639af7de8062ebfe16a232e0a3a1",
   "copyEngine": true
 }
 
@@ -265,8 +265,8 @@ const fs = require('fs')
 config.dirname = __dirname
 if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   const alternativePaths = [
+    "src/generated/prisma",
     "generated/prisma",
-    "prisma",
   ]
   
   const alternativePath = alternativePaths.find((altPath) => {
@@ -296,7 +296,7 @@ Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
-path.join(process.cwd(), "generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
-path.join(process.cwd(), "generated/prisma/schema.prisma")
+path.join(process.cwd(), "src/generated/prisma/schema.prisma")

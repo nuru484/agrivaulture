@@ -23,8 +23,7 @@
     "server.ts",
     "./src/**/*",
     "src/validations/validation-error-handler.ts",
-    "types",
-    "generated/**/*"
+    "types"
   ],
   "exclude": ["node_modules", "build"]
 }
