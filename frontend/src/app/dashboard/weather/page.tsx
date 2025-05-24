@@ -74,8 +74,6 @@ export default function WeatherPage() {
     { skip: !searchDate }
   );
 
-  console.log(dateWeatherData);
-
   // Handle search submission
   const handleSearch = () => {
     setSelectedRegion(searchRegion || selectedRegion);
@@ -91,14 +89,15 @@ export default function WeatherPage() {
     }
   };
 
+  // Determine which data to use - prioritize dateWeatherData when available
+  const activeWeatherData =
+    searchDate && dateWeatherData ? dateWeatherData : currentWeatherData;
+
   const isLoading = searchDate
     ? isLoadingDate || isFetchingDate
     : isLoadingCurrent;
 
   const error = searchDate ? dateError : currentError;
-
-  console.log('Date Error:', dateError);
-  console.log('Current Error:', currentError);
 
   const errorMessage = extractApiErrorMessage(error);
 
@@ -236,31 +235,27 @@ export default function WeatherPage() {
         )}
 
         {/* Weather Content */}
-        {!isLoading && currentWeatherData?.data && (
+        {!isLoading && activeWeatherData?.data && (
           <>
             <TabsContent value="current" className="space-y-6 mt-4">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                  {currentWeatherData?.data && (
-                    <CurrentWeather
-                      data={currentWeatherData.data.current_weather}
-                    />
-                  )}
+                  <CurrentWeather
+                    data={activeWeatherData.data.current_weather}
+                  />
                 </div>
                 <div>
-                  {currentWeatherData?.data && (
-                    <WeatherRecommendation data={currentWeatherData.data} />
-                  )}
+                  <WeatherRecommendation data={activeWeatherData.data} />
                 </div>
               </div>
-              <WeatherCharts data={currentWeatherData.data ?? {}} />
+              <WeatherCharts data={activeWeatherData.data ?? {}} />
             </TabsContent>
 
             <TabsContent value="hourly" className="mt-4">
               <HourlyForecast
                 data={
-                  Array.isArray(currentWeatherData.data.hourly_forecast)
-                    ? currentWeatherData?.data.hourly_forecast
+                  Array.isArray(activeWeatherData.data.hourly_forecast)
+                    ? activeWeatherData.data.hourly_forecast
                     : []
                 }
               />
@@ -269,8 +264,8 @@ export default function WeatherPage() {
             <TabsContent value="daily" className="mt-4">
               <DailyForecast
                 data={
-                  Array.isArray(currentWeatherData?.data.daily_forecast)
-                    ? currentWeatherData?.data.daily_forecast
+                  Array.isArray(activeWeatherData.data.daily_forecast)
+                    ? activeWeatherData.data.daily_forecast
                     : []
                 }
               />

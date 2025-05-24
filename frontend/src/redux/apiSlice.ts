@@ -36,6 +36,7 @@ const baseQueryWithReauth: BaseQueryFn<
 
       try {
         // Try to get a new token (one attempt only)
+
         const refreshResult = await baseQuery(
           { url: 'auth/refresh-token', method: 'POST' },
           api,

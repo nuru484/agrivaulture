@@ -1,6 +1,6 @@
 'use client';
 import { format } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -39,6 +39,19 @@ export function DatePicker({ date, setDate, className }: DatePickerProps) {
           onSelect={setDate}
           initialFocus
         />
+        {date && (
+          <div className="p-3 border-t">
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full"
+              onClick={() => setDate(undefined)}
+            >
+              <X className="mr-2 h-4 w-4" />
+              Clear date
+            </Button>
+          </div>
+        )}
       </PopoverContent>
     </Popover>
   );
