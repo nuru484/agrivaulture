@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
     "start": "node build/server.js",
-    "build": "npx tsc --diagnostics && echo 'Build completed successfully!'",
+    "build": "npx tsc --diagnostics && cp -r generated build/ && echo 'Build completed successfully!'",
     "migrate": "npx prisma migrate dev --name init"
   },
   "keywords": [],
@@ -14,9 +14,9 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.9",
     "prisma": "^6.6.0",
     "ts-node-dev": "^2.0.0",
-    "tsx": "^4.19.3",
     "typescript": "^5.8.3"
   },
   "dependencies": {
@@ -24,13 +24,9 @@
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
-    "@types/jsonwebtoken": "^9.0.9",
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.12",
-    "@types/node": "^22.14.1",
     "@types/nodemailer": "^6.4.17",
-    "@prisma/client": "^6.6.0",
-    "@prisma/extension-accelerate": "^1.3.0",
     "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.6.0",
@@ -46,7 +42,6 @@
     "nodemailer": "^6.10.1",
     "pino": "^9.6.0",
     "pino-pretty": "^13.0.0",
-    "redis": "^4.7.0",
-    "tsyringe": "^4.10.0"
+    "redis": "^4.7.0"
   }
 }

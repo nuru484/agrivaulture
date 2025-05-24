@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Role enum for User
+enum Role {
+  FARMER
+  ADMIN
+}
+
+// User model for farmers and extension officers
+model User {
+  id             String       @id @default(uuid())
+  name           String       @db.VarChar(100)
+  email          String?      @unique @db.VarChar(255)
+  password       String       @db.VarChar(255)
+  role           Role         @default(FARMER)
+  region         String       @db.VarChar(100) // e.g., Ashanti, Greater Accra
+  phone          String       @unique @db.VarChar(20) // Phone number for SMS
+  profilePicture String?      @db.VarChar(255) // URL to profile picture
+  bio            String?      @db.Text // Short biography or description
+  address        String?      @db.VarChar(255) // Physical address
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  records        CropRecord[] // One-to-many with CropRecord
+
+  // Indexes for frequent queries
+  @@index([email])
+  @@index([phone])
+  @@index([region])
+}
+
+// CropRecord model for tracking crop cycles, expenses, and yields
+model CropRecord {
+  id             String    @id @default(uuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cropType       String    @db.VarChar(50) // e.g., Maize, Rice
+  plantingDate   DateTime
+  harvestingDate DateTime? // Optional, as harvest may not yet occur
+  notes          String?   @db.Text // Free-text notes
+  expenses       Expense[] // One-to-many with Expense
+  yields         Yield[] // One-to-many with Yield
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Indexes for frequent queries
+  @@index([userId])
+  @@index([cropType])
+  @@index([plantingDate])
+}
+
+// Expense model for logging costs associated with a crop cycle
+model Expense {
+  id           String     @id @default(uuid())
+  cropRecordId String
+  cropRecord   CropRecord @relation(fields: [cropRecordId], references: [id], onDelete: Cascade)
+  item         String     @db.VarChar(100) // e.g., Fertilizer, Labor
+  cost         Float      @db.DoublePrecision // Cost in local currency (e.g., GHS)
+  date         DateTime
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  // Indexes for frequent queries
+  @@index([cropRecordId])
+  @@index([date])
+}
+
+// Yield model for logging harvest quantities
+model Yield {
+  id           String     @id @default(uuid())
+  cropRecordId String
+  cropRecord   CropRecord @relation(fields: [cropRecordId], references: [id], onDelete: Cascade)
+  quantity     Float      @db.DoublePrecision // e.g., 500 (in kg, tons, etc.)
+  unit         String     @db.VarChar(20) // e.g., kg, tons
+  date         DateTime
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  // Indexes for frequent queries
+  @@index([cropRecordId])
+  @@index([date])
+}
+
+// MarketPrice model for storing crop market prices
+model MarketPrice {
+  id        String   @id @default(uuid())
+  crop      String   @db.VarChar(50) // e.g., Maize, Rice
+  region    String   @db.VarChar(100) // e.g., Ashanti
+  price     Float    @db.DoublePrecision // Price per unit
+  unit      String   @db.VarChar(20) // e.g., kg, bag
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Ensure unique price data per crop, region, and date
+  @@unique([crop, region, date])
+  // Indexes for frequent queries
+  @@index([crop])
+  @@index([region])
+  @@index([date])
+}
+
+// FarmingTip model for region-specific farming advice
+model FarmingTip {
+  id        String   @id @default(uuid())
+  tip       String   @db.Text // The actual tip content
+  crop      String?  @db.VarChar(50) // Optional, e.g., Maize
+  region    String?  @db.VarChar(100) // Optional, e.g., Ashanti
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Indexes for frequent queries
+  @@index([crop])
+  @@index([region])
+  @@index([date])
+}
+
+// Weather model for caching weather data (optional, depending on API usage)
+model Weather {
+  id        String   @id @default(uuid())
+  region    String   @db.VarChar(100) // e.g., Ashanti
+  data      Json // JSON data from weather API (current, forecast)
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Ensure unique weather data per region and date
+  @@unique([region, date])
+  // Indexes for frequent queries
+  @@index([region])
+  @@index([date])
+}
