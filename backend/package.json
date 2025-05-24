@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
     "start": "node build/server.js",
-    "build": "npx tsc",
+    "build": "npx tsc --diagnostics && echo 'Build completed successfully!'",
     "migrate": "npx prisma migrate dev --name init"
   },
   "keywords": [],
@@ -15,9 +15,11 @@
   "description": "",
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.12",
     "@types/node": "^22.14.1",
     "@types/nodemailer": "^6.4.17",
