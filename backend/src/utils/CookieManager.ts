@@ -27,7 +27,6 @@ export class CookieManager {
   private static tokenConfigs = {
     accessToken: {
       ...CookieManager.defaultOptions,
-      maxAge: 15 * 60 * 1000, // 15 minutes
     },
     refreshToken: {
       ...CookieManager.defaultOptions,

@@ -11,8 +11,6 @@ const authenticateJWT = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const token = CookieManager.getAccessToken(req);
 
-    console.log('Token:', token); // Debugging line
-
     // Check if token exists
     if (!token) {
       throw new UnauthorizedError('Access token not found', {

@@ -90,7 +90,7 @@ const getExpense = asyncHandler(
       throw new NotFoundError('Expense not found');
     }
 
-    if (expense.cropRecord.userId !== userId) {
+    if (expense.cropRecord.userId !== userId && req.user?.role !== 'ADMIN') {
       throw new UnauthorizedError(
         'You do not have permission to view this expense'
       );
