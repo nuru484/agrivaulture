@@ -17,6 +17,8 @@ const allowedOrigins = new Set(
   process.env.CORS_ACCESS ? process.env.CORS_ACCESS.split(',') : []
 );
 
+console.log('Allowed Origins:', allowedOrigins);
+
 interface CorsCallback {
   (err: Error | null, allow: boolean): void;
 }
