@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation';
 import {
   useCreateCropRecordMutation,
   useUpdateCropRecordMutation,
-} from '@/redux/crop-cycle/crop-record';
+} from '@/redux/crop-cycle/cropRecordApi';
 import toast from 'react-hot-toast';
 import { ICropRecord } from '@/types/crop-cycle/crop-record';
 

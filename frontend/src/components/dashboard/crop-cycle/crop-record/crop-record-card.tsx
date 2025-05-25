@@ -13,7 +13,7 @@ import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
-import { useDeleteCropRecordMutation } from '@/redux/crop-cycle/crop-record';
+import { useDeleteCropRecordMutation } from '@/redux/crop-cycle/cropRecordApi';
 import toast from 'react-hot-toast';
 import { ICropRecord } from '@/types/crop-cycle/crop-record';
 

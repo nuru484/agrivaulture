@@ -8,7 +8,7 @@ import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import {
   useDeleteAllCropRecordsMutation,
   useGetAllCropRecordsQuery,
-} from '@/redux/crop-cycle/crop-record';
+} from '@/redux/crop-cycle/cropRecordApi';
 import toast from 'react-hot-toast';
 
 export default function CropsPage() {

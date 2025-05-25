@@ -1,3 +1,5 @@
+// src/types/crop-cycle/crop-record.ts
+
 export interface ICropRecord {
   id: string;
   userId: string;

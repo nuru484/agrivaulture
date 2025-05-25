@@ -1,5 +1,5 @@
 'use client';
-import { useGetCropRecordQuery } from '@/redux/crop-cycle/crop-record';
+import { useGetCropRecordQuery } from '@/redux/crop-cycle/cropRecordApi';
 import { CropRecordForm } from '@/components/dashboard/crop-cycle/crop-record/crop-record-form';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useParams } from 'next/navigation';
