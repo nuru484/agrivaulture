@@ -1,5 +1,4 @@
 // src/types/crop-cycle/crop-expense.ts
-
 export interface IExpense {
   id: string;
   cropRecordId: string;

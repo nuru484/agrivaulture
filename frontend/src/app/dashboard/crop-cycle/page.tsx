@@ -1,3 +1,4 @@
+// src/app/dashboard/crop-cycle/page.tsx
 'use client';
 import { Button } from '@/components/ui/button';
 import { CropRecordList } from '@/components/dashboard/crop-cycle/crop-record/crop-record-list';

@@ -1,3 +1,4 @@
+// src/components/dashboard/crop-cycle/crop-record/crop-record-card.tsx
 'use client';
 import {
   Card,

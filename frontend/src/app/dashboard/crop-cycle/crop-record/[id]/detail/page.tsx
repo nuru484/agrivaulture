@@ -1,3 +1,4 @@
+// src/app/dashboard/crop-cycle/crop-record/[id]/detail/page.tsx
 'use client';
 import { useGetCropRecordQuery } from '@/redux/crop-cycle/cropRecordApi';
 import { CropRecordDetail } from '@/components/dashboard/crop-cycle/crop-record/crop-record-detail';

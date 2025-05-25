@@ -1,3 +1,4 @@
+// src/types/weather/index.ts
 export interface IWeatherDataResponse {
   timezone: string;
   timezone_offset: number;

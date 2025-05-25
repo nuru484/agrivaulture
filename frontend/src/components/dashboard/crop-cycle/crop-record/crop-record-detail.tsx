@@ -1,3 +1,4 @@
+// src/components/dashboard/crop-cycle/crop-record/crop-record-detail.tsx
 'use client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
