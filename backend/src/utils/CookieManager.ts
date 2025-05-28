@@ -19,7 +19,7 @@ export class CookieManager {
   private static defaultOptions: CookieOptions = {
     httpOnly: true,
     secure: ENV.NODE_ENV === 'production',
-    sameSite: 'none',
+    sameSite: 'lax',
     path: '/',
   };
 
