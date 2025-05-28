@@ -23,6 +23,8 @@ const createExpense = asyncHandler(
     const { cropRecordId, item, cost, date } = req.body;
     const userId = req.user?.id;
 
+    // update
+
     if (!userId) {
       throw new UnauthorizedError('Unauthorized, no user provided');
     }
