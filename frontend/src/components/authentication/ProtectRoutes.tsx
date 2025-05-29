@@ -6,9 +6,7 @@ import { RootState } from '@/redux/store';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-interface ProtectedProps {
-  children: React.ReactNode;
-}
+
 
 // Sidebar Skeleton Component
 function SidebarSkeleton() {
@@ -123,7 +121,7 @@ function CardSkeleton({
 }
 
 // Main Dashboard Skeleton Component
-function DashboardSkeleton() {
+export function DashboardSkeleton() {
   return (
     <div className="flex h-screen bg-primary/5">
       <SidebarSkeleton />
@@ -157,6 +155,10 @@ function DashboardSkeleton() {
       </div>
     </div>
   );
+}
+
+interface ProtectedProps {
+  children: React.ReactNode;
 }
 
 export default function ProtectRoutes({ children }: ProtectedProps) {

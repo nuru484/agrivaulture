@@ -30,3 +30,11 @@ export interface ICreateMarketPriceRequest {
 export interface IUpdateMarketPriceRequest extends Partial<ICreateMarketPriceRequest> {
   id: string;
 }
+
+export interface IMarketPriceFormValues {
+  crop: string;
+  region: string;
+  price: number;
+  unit: string;
+  date: string;
+}
