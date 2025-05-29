@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/dashboard/crop-cycle/crop-record/[id]"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/dashboard/crop-cycle/crop-record/[id]", "src/app/dashboard/crop-cycle/expense/[id]/edit"],
   "exclude": ["node_modules"]
 }
