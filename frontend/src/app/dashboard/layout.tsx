@@ -9,6 +9,7 @@ import {
 import ProtectRoutes from '@/components/authentication/ProtectRoutes';
 import ModeToggleButton from '@/components/ModeToggleButton';
 import LogoutButton from '@/components/authentication/LogoutButton';
+import SwitchRole from '@/components/admin-dashboard/SwitchRole';
 
 interface AgriLayoutProps {
   children: React.ReactNode;
@@ -24,6 +25,7 @@ export default function DashboardLayout({ children }: AgriLayoutProps) {
             <SidebarTrigger className="mr-2" />
 
             <div className="flex gap-2">
+                 <SwitchRole />
               <ModeToggleButton />
               <LogoutButton />
             </div>
