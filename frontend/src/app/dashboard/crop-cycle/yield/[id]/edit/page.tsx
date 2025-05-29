@@ -1,14 +1,13 @@
-// src/app/dashboard/crop-cycle/expense/[id]/edit/page.tsx
 'use client';
-import { useGetExpenseQuery } from '@/redux/crop-cycle/cropExpenseApi';
-import { ExpenseForm } from '@/components/dashboard/crop-cycle/crop-expense/crop-record-form';
+import { useGetYieldQuery } from '@/redux/crop-cycle/cropYieldApi';
+import { YieldForm } from '@/components/dashboard/crop-cycle/crop-yield/crop-yield-form';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useParams } from 'next/navigation';
 
-export default function EditExpensePage() {
+export default function EditYieldPage() {
   const { id } = useParams<{ id: string }>();
 
-  const { data: expense, error, isLoading } = useGetExpenseQuery(id!);
+  const { data: yieldRecord, error, isLoading } = useGetYieldQuery(id!);
 
   if (isLoading) {
     return (
@@ -20,11 +19,11 @@ export default function EditExpensePage() {
     );
   }
 
-  if (error || !expense?.data) {
+  if (error || !yieldRecord?.data) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">
-          <p className="text-muted-foreground">Expense not found.</p>
+          <p className="text-muted-foreground">Yield not found.</p>
         </div>
       </div>
     );
@@ -32,7 +31,7 @@ export default function EditExpensePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <ExpenseForm expense={expense.data} mode="edit" cropRecordId={expense.data.cropRecordId} />
+      <YieldForm yield={yieldRecord.data} mode="edit" cropRecordId={yieldRecord.data.cropRecordId} />
     </div>
   );
 }

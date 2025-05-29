@@ -1,5 +1,4 @@
 'use client';
-
 import { useGetCropRecordQuery } from '@/redux/crop-cycle/cropRecordApi';
 import { CropRecordDetail } from '@/components/dashboard/crop-cycle/crop-record/crop-record-detail';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -8,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useParams } from 'next/navigation';
 import { ExpenseList } from '@/components/dashboard/crop-cycle/crop-expense/crop-record-list';
+import { YieldList } from '@/components/dashboard/crop-cycle/crop-yield/crop-yield-list';
 import { Plus, Receipt, TrendingUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -60,12 +60,11 @@ export default function CropDetailPage() {
 
   // Tab Action Handlers
   const handleCreateExpense = () => {
-   router.push(`/dashboard/crop-cycle/crop-record/${id}/expense/create`);
+    router.push(`/dashboard/crop-cycle/crop-record/${id}/expense/create`);
   };
 
   const handleCreateYield = () => {
-    // TODO: Implement create yield functionality
-    console.log('Create yield record for crop:', id);
+    router.push(`/dashboard/crop-cycle/crop-record/${id}/yield/create`);
   };
 
   // Main Content
@@ -156,14 +155,7 @@ export default function CropDetailPage() {
               </Button>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <TrendingUp className="h-12 w-12 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Yield Tracking Coming Soon</h3>
-                <p className="text-muted-foreground max-w-md">
-                  Yield recording functionality will be available in the next update. 
-                  You&#39;ll be able to track harvest quantities, quality metrics, and production analytics.
-                </p>
-              </div>
+              <YieldList cropRecordId={id} />
             </CardContent>
           </Card>
         </TabsContent>

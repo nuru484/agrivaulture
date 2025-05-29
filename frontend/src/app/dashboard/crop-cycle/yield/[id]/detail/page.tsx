@@ -1,14 +1,14 @@
-// src/app/dashboard/crop-cycle/expense/[id]/detail/page.tsx
+// src/app/dashboard/crop-cycle/yield/[id]/detail/page.tsx
 'use client';
-import { useGetExpenseQuery } from '@/redux/crop-cycle/cropExpenseApi';
-import { ExpenseDetail } from '@/components/dashboard/crop-cycle/crop-expense/crop-expense-detail';
+import { useGetYieldQuery } from '@/redux/crop-cycle/cropYieldApi';
+import { YieldDetail } from '@/components/dashboard/crop-cycle/crop-yield/crop-yield-detail';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useParams } from 'next/navigation';
 
-export default function ExpenseDetailPage() {
+export default function YieldDetailPage() {
   const { id } = useParams<{ id: string }>();
 
-  const { data: expense, error, isLoading } = useGetExpenseQuery(id!);
+  const { data: yieldRecord, error, isLoading } = useGetYieldQuery(id!);
 
   if (isLoading) {
     return (
@@ -21,11 +21,11 @@ export default function ExpenseDetailPage() {
     );
   }
 
-  if (error || !expense?.data) {
+  if (error || !yieldRecord?.data) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-12">
-          <p className="text-muted-foreground">Expense not found.</p>
+          <p className="text-muted-foreground">Yield not found.</p>
         </div>
       </div>
     );
@@ -33,7 +33,7 @@ export default function ExpenseDetailPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <ExpenseDetail expense={expense.data} />
+      <YieldDetail yield={yieldRecord.data} />
     </div>
   );
 }

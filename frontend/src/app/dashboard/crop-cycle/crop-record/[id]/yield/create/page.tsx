@@ -1,7 +1,6 @@
-
-// src/app/dashboard/crop-cycle/crop-record/[id]/expense/create/page.tsx
+// src/app/dashboard/crop-cycle/crop-record/[id]/yield/create/page.tsx
 'use client';
-import { ExpenseForm } from '@/components/dashboard/crop-cycle/crop-expense/crop-record-form';
+import { YieldForm } from '@/components/dashboard/crop-cycle/crop-yield/crop-yield-form';
 import { useParams } from 'next/navigation';
 
 export default function NewExpensePage() {
@@ -10,7 +9,7 @@ export default function NewExpensePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <ExpenseForm mode="create" cropRecordId={cropRecordId} />
+      <YieldForm mode="create" cropRecordId={cropRecordId} />
     </div>
   );
 }
