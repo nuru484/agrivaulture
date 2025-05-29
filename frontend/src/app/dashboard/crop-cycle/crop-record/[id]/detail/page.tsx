@@ -9,10 +9,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useParams } from 'next/navigation';
 import { ExpenseList } from '@/components/dashboard/crop-cycle/crop-expense/crop-record-list';
 import { Plus, Receipt, TrendingUp } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function CropDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { data: crop, error, isLoading } = useGetCropRecordQuery(id!);
+  const router = useRouter();
 
   // Loading State
   if (isLoading) {
@@ -58,8 +60,7 @@ export default function CropDetailPage() {
 
   // Tab Action Handlers
   const handleCreateExpense = () => {
-    // TODO: Implement create expense functionality
-    console.log('Create expense for crop:', id);
+   router.push(`/dashboard/crop-cycle/crop-record/${id}/expense/create`);
   };
 
   const handleCreateYield = () => {
