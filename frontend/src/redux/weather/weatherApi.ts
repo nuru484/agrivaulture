@@ -1,4 +1,3 @@
-// src/redux/weather/weatherApi.ts
 import { apiSlice } from '../apiSlice';
 import { IWeatherDataResponse } from '@/types/weather';
 
@@ -8,16 +7,33 @@ export interface WeatherDataResponse {
   data: IWeatherDataResponse;
 }
 
+export interface IFetchWeatherPayload {
+  region: string;
+}
+
+export interface IFetchWeatherResponse {
+  message: string;
+  data: {
+    region: string;
+    date: string;
+  };
+}
+
 export const weatherApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    fetchWeather: builder.mutation<IFetchWeatherResponse, IFetchWeatherPayload>({
+      query: (payload) => ({
+        url: '/weather/fetch',
+        method: 'POST',
+        body: payload,
+      }),
+    }),
     getLatestWeather: builder.query<WeatherDataResponse, string>({
-      // `region` is a string like "Tamale, GHA"
       query: (region) => ({
         url: `/weather/${region}`,
         method: 'GET',
       }),
     }),
-
     getWeatherByDate: builder.query<
       WeatherDataResponse,
       { region: string; date: string }
@@ -30,5 +46,8 @@ export const weatherApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetLatestWeatherQuery, useGetWeatherByDateQuery } =
-  weatherApi;
+export const {
+  useFetchWeatherMutation,
+  useGetLatestWeatherQuery,
+  useGetWeatherByDateQuery,
+} = weatherApi;
