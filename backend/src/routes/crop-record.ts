@@ -10,6 +10,7 @@ import {
 
 const cropRecordRoutes = Router();
 
+
 // Create a new crop record
 cropRecordRoutes.post('/crop-records', createCropRecord);
 

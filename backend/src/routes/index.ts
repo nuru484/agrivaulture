@@ -9,6 +9,7 @@ import cropExpenseRoutes from './crop-expense';
 import cropYieldRoutes from './crop-yield';
 import farmingTipRoutes from './farming-tip';
 import weatherRoutes from './weather-info';
+import userRoutes from './user';
 
 routes.use(authenticationRouter);
 routes.use(authenticateJWT, cropRecordRoutes);
@@ -17,5 +18,6 @@ routes.use(authenticateJWT, cropExpenseRoutes);
 routes.use(authenticateJWT, cropYieldRoutes);
 routes.use(authenticateJWT, farmingTipRoutes);
 routes.use(authenticateJWT, weatherRoutes);
+routes.use(authenticateJWT, userRoutes);
 
 export default routes;

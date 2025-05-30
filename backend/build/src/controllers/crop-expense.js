@@ -13,6 +13,7 @@ const constants_1 = require("../config/constants");
 const createExpense = (0, error_handler_1.asyncHandler)(async (req, res, next) => {
     const { cropRecordId, item, cost, date } = req.body;
     const userId = req.user?.id;
+    // update
     if (!userId) {
         throw new error_handler_1.UnauthorizedError('Unauthorized, no user provided');
     }
