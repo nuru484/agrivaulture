@@ -5,6 +5,7 @@ import { UnauthorizedError } from '../middlewares/error-handler';
 export interface CookieOptions {
   httpOnly?: boolean;
   secure?: boolean;
+  domain?: string;
   maxAge?: number;
   sameSite?: 'strict' | 'lax' | 'none';
   path?: string;
@@ -19,6 +20,7 @@ export class CookieManager {
   private static defaultOptions: CookieOptions = {
     httpOnly: true,
     secure: ENV.NODE_ENV === 'production',
+    domain: ENV.COOKIE_DOMAIN || undefined,
     sameSite: 'lax',
     path: '/',
   };

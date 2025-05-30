@@ -29,5 +29,6 @@ const ENV = {
     ACCESS_TOKEN_EXPIRY: process.env.ACCESS_TOKEN_EXPIRY,
     REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
     REFRESH_TOKEN_EXPIRY: process.env.REFRESH_TOKEN_EXPIRY,
+    COOKIE_DOMAIN: process.env.COOKIE_DOMAIN,
 };
 exports.default = ENV;

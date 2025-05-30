@@ -15,6 +15,7 @@ class CookieManager {
     static defaultOptions = {
         httpOnly: true,
         secure: env_1.default.NODE_ENV === 'production',
+        domain: env_1.default.COOKIE_DOMAIN || undefined,
         sameSite: 'lax',
         path: '/',
     };
