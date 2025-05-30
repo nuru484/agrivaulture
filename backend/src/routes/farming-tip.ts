@@ -1,3 +1,4 @@
+// src/routes/farming-tip.ts
 import { Router } from 'express';
 import {
   createFarmingTip,

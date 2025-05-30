@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// src/routes/crop-yield.ts
 const express_1 = require("express");
 const crop_yield_1 = require("../controllers/crop-yield");
 const cropYieldRoutes = (0, express_1.Router)();

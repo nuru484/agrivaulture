@@ -1519,6 +1519,7 @@ export namespace Prisma {
     password: string | null
     role: $Enums.Role | null
     region: string | null
+    city: string | null
     phone: string | null
     profilePicture: string | null
     bio: string | null
@@ -1534,6 +1535,7 @@ export namespace Prisma {
     password: string | null
     role: $Enums.Role | null
     region: string | null
+    city: string | null
     phone: string | null
     profilePicture: string | null
     bio: string | null
@@ -1549,6 +1551,7 @@ export namespace Prisma {
     password: number
     role: number
     region: number
+    city: number
     phone: number
     profilePicture: number
     bio: number
@@ -1566,6 +1569,7 @@ export namespace Prisma {
     password?: true
     role?: true
     region?: true
+    city?: true
     phone?: true
     profilePicture?: true
     bio?: true
@@ -1581,6 +1585,7 @@ export namespace Prisma {
     password?: true
     role?: true
     region?: true
+    city?: true
     phone?: true
     profilePicture?: true
     bio?: true
@@ -1596,6 +1601,7 @@ export namespace Prisma {
     password?: true
     role?: true
     region?: true
+    city?: true
     phone?: true
     profilePicture?: true
     bio?: true
@@ -1684,6 +1690,7 @@ export namespace Prisma {
     password: string
     role: $Enums.Role
     region: string
+    city: string | null
     phone: string
     profilePicture: string | null
     bio: string | null
@@ -1716,6 +1723,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     region?: boolean
+    city?: boolean
     phone?: boolean
     profilePicture?: boolean
     bio?: boolean
@@ -1733,6 +1741,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     region?: boolean
+    city?: boolean
     phone?: boolean
     profilePicture?: boolean
     bio?: boolean
@@ -1748,6 +1757,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     region?: boolean
+    city?: boolean
     phone?: boolean
     profilePicture?: boolean
     bio?: boolean
@@ -1763,6 +1773,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     region?: boolean
+    city?: boolean
     phone?: boolean
     profilePicture?: boolean
     bio?: boolean
@@ -1771,7 +1782,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "region" | "phone" | "profilePicture" | "bio" | "address" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "region" | "city" | "phone" | "profilePicture" | "bio" | "address" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     records?: boolean | User$recordsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1791,6 +1802,7 @@ export namespace Prisma {
       password: string
       role: $Enums.Role
       region: string
+      city: string | null
       phone: string
       profilePicture: string | null
       bio: string | null
@@ -2227,6 +2239,7 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
     readonly region: FieldRef<"User", 'String'>
+    readonly city: FieldRef<"User", 'String'>
     readonly phone: FieldRef<"User", 'String'>
     readonly profilePicture: FieldRef<"User", 'String'>
     readonly bio: FieldRef<"User", 'String'>
@@ -9168,6 +9181,7 @@ export namespace Prisma {
     password: 'password',
     role: 'role',
     region: 'region',
+    city: 'city',
     phone: 'phone',
     profilePicture: 'profilePicture',
     bio: 'bio',
@@ -9400,6 +9414,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
     region?: StringFilter<"User"> | string
+    city?: StringNullableFilter<"User"> | string | null
     phone?: StringFilter<"User"> | string
     profilePicture?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
@@ -9416,6 +9431,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     region?: SortOrder
+    city?: SortOrderInput | SortOrder
     phone?: SortOrder
     profilePicture?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
@@ -9436,6 +9452,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
     region?: StringFilter<"User"> | string
+    city?: StringNullableFilter<"User"> | string | null
     profilePicture?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     address?: StringNullableFilter<"User"> | string | null
@@ -9451,6 +9468,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     region?: SortOrder
+    city?: SortOrderInput | SortOrder
     phone?: SortOrder
     profilePicture?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
@@ -9472,6 +9490,7 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     region?: StringWithAggregatesFilter<"User"> | string
+    city?: StringNullableWithAggregatesFilter<"User"> | string | null
     phone?: StringWithAggregatesFilter<"User"> | string
     profilePicture?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -9887,6 +9906,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     region: string
+    city?: string | null
     phone: string
     profilePicture?: string | null
     bio?: string | null
@@ -9903,6 +9923,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     region: string
+    city?: string | null
     phone: string
     profilePicture?: string | null
     bio?: string | null
@@ -9919,6 +9940,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     region?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9935,6 +9957,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     region?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9951,6 +9974,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     region: string
+    city?: string | null
     phone: string
     profilePicture?: string | null
     bio?: string | null
@@ -9966,6 +9990,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     region?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9981,6 +10006,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     region?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10491,6 +10517,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     region?: SortOrder
+    city?: SortOrder
     phone?: SortOrder
     profilePicture?: SortOrder
     bio?: SortOrder
@@ -10506,6 +10533,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     region?: SortOrder
+    city?: SortOrder
     phone?: SortOrder
     profilePicture?: SortOrder
     bio?: SortOrder
@@ -10521,6 +10549,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     region?: SortOrder
+    city?: SortOrder
     phone?: SortOrder
     profilePicture?: SortOrder
     bio?: SortOrder
@@ -11404,6 +11433,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     region: string
+    city?: string | null
     phone: string
     profilePicture?: string | null
     bio?: string | null
@@ -11419,6 +11449,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     region: string
+    city?: string | null
     phone: string
     profilePicture?: string | null
     bio?: string | null
@@ -11506,6 +11537,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     region?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -11521,6 +11553,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     region?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null

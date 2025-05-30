@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// src/routes/farming-tip.ts
 const express_1 = require("express");
 const farming_tip_1 = require("../controllers/farming-tip");
 const authorize_roles_1 = require("../middlewares/authorize-roles");

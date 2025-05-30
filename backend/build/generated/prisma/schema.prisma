@@ -22,6 +22,7 @@ model User {
   password       String       @db.VarChar(255)
   role           Role         @default(FARMER)
   region         String       @db.VarChar(100) // e.g., Ashanti, Greater Accra
+  city           String?      @db.VarChar(100) // Optional city within the region
   phone          String       @unique @db.VarChar(20) // Phone number for SMS
   profilePicture String?      @db.VarChar(255) // URL to profile picture
   bio            String?      @db.Text // Short biography or description

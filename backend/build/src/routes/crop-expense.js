@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// src/routes/crop-expense.ts
 const express_1 = require("express");
 const crop_expense_1 = require("../controllers/crop-expense");
 const cropExpenseRoutes = (0, express_1.Router)();

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// src/routes/crop-market-price.ts
 const express_1 = require("express");
 const crop_market_price_1 = require("../controllers/crop-market-price");
 const authorize_roles_1 = require("../middlewares/authorize-roles");

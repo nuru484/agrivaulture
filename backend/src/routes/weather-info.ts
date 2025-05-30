@@ -1,3 +1,4 @@
+// src/routes/weather-info.ts
 import { Router } from 'express';
 import {
   fetchWeather,

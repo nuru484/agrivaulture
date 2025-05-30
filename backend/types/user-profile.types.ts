@@ -12,6 +12,7 @@ export interface IUserProfile {
   role: UserRole;
   region: string;
   phone: string;
+    city: string;
   profilePicture?: string;
   bio: string;
   address: string;
@@ -31,6 +32,7 @@ export interface IUserRegistrationInput {
 
 export interface IUserResponseData {
   region: string;
+    city: string;
   email: string;
   name: string;
   role: UserRole; // Enum for user roles
