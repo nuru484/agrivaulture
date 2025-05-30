@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useParams } from 'next/navigation';
-import { ExpenseList } from '@/components/dashboard/crop-cycle/crop-expense/crop-record-list';
+import { ExpenseList } from '@/components/dashboard/crop-cycle/crop-expense/crop-expense-list';
 import { YieldList } from '@/components/dashboard/crop-cycle/crop-yield/crop-yield-list';
 import { Plus, Receipt, TrendingUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';

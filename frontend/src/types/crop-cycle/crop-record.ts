@@ -10,26 +10,6 @@ export interface ICropRecord {
   updatedAt: string;
 }
 
-export interface IExpense {
-  id: string;
-  cropRecordId: string;
-  item: string;
-  cost: number;
-  date: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface IYield {
-  id: string;
-  cropRecordId: string;
-  quantity: number;
-  unit: string;
-  date: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface ICreateCropRecordRequest {
   cropType: string;
   plantingDate: string;

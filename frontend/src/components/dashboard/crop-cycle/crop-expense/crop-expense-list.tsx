@@ -2,7 +2,7 @@
 import { useGetAllExpensesQuery } from "@/redux/crop-cycle/cropExpenseApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ExpenseCard } from "./crop-expense-card";
-import { IExpense } from "@/types/crop-cycle/crop-record";
+import { IExpense } from "@/types/crop-cycle/crop-expense";
 
 
 export function ExpenseList({ cropRecordId }: { cropRecordId: string }) {

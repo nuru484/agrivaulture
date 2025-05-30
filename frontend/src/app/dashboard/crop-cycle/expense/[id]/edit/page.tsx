@@ -1,7 +1,7 @@
 // src/app/dashboard/crop-cycle/expense/[id]/edit/page.tsx
 'use client';
 import { useGetExpenseQuery } from '@/redux/crop-cycle/cropExpenseApi';
-import { ExpenseForm } from '@/components/dashboard/crop-cycle/crop-expense/crop-record-form';
+import { ExpenseForm } from '@/components/dashboard/crop-cycle/crop-expense/crop-expense-form';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useParams } from 'next/navigation';
 

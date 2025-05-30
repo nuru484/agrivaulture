@@ -1,7 +1,7 @@
 
 // src/app/dashboard/crop-cycle/crop-record/[id]/expense/create/page.tsx
 'use client';
-import { ExpenseForm } from '@/components/dashboard/crop-cycle/crop-expense/crop-record-form';
+import { ExpenseForm } from '@/components/dashboard/crop-cycle/crop-expense/crop-expense-form';
 import { useParams } from 'next/navigation';
 
 export default function NewExpensePage() {
