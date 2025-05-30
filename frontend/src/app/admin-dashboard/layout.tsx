@@ -30,7 +30,7 @@ export default function DashboardLayout({ children }: AgriLayoutProps) {
               <LogoutButton />
             </div>
           </header>
-          <main className="flex-1 p-6">{children}</main>
+          <main className="container m-auto flex-1 p-6">{children}</main>
         </SidebarInset>
       </SidebarProvider>
     </ProtectAdminRoutes>

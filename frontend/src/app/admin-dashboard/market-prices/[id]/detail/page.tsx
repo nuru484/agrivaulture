@@ -1,14 +1,14 @@
 'use client';
-import { useParams } from 'next/navigation';
 import { useGetMarketPriceQuery } from '@/redux/market-prices/marketPriceApi';
 import { MarketPriceDetail } from '@/components/dashboard/market-prices/market-price-detail';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 
 export default function MarketPriceDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: price, error, isLoading } = useGetMarketPriceQuery(id);
+  const { data: price, error, isLoading } = useGetMarketPriceQuery(id!);
 
   if (isLoading) {
     return (
@@ -32,7 +32,7 @@ export default function MarketPriceDetailPage() {
         <Card className="border-destructive/50">
           <CardContent className="flex flex-col items-center justify-center py-12">
             <div className="text-destructive text-6xl mb-4">⚠️</div>
-            <CardTitle className="text-destructive mb-2">Market Price Not Found</CardTitle>
+            <CardTitle className="text-destructive mb-2">Price Not Found</CardTitle>
             <CardDescription>
               The requested market price could not be found or loaded.
             </CardDescription>

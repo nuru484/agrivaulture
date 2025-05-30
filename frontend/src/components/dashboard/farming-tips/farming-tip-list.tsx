@@ -28,7 +28,7 @@ export function FarmingTipList() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="container m-auto space-y-4">
       {data.data.map((tip: IFarmingTip) => (
         <FarmingTipListItem key={tip.id} tip={tip} />
       ))}

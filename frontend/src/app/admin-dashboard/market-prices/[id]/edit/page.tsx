@@ -1,12 +1,12 @@
 'use client';
 import { useParams } from 'next/navigation';
 import { useGetMarketPriceQuery } from '@/redux/market-prices/marketPriceApi';
-import { MarketPriceDetail } from '@/components/dashboard/market-prices/market-price-detail';
+import { MarketPriceForm } from '@/components/dashboard/market-prices/market-price-form';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 
-export default function MarketPriceDetailPage() {
+export default function UpdateMarketPricePage() {
   const { id } = useParams<{ id: string }>();
   const { data: price, error, isLoading } = useGetMarketPriceQuery(id);
 
@@ -51,7 +51,7 @@ export default function MarketPriceDetailPage() {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
-      <MarketPriceDetail price={price.data} />
+      <MarketPriceForm mode="edit" price={price.data} />
     </div>
   );
 }

@@ -68,7 +68,7 @@ export function FarmingTipForm({ tip, mode }: IFarmingTipFormProps) {
         toast.success('Farming tip updated successfully');
       }
 
-      router.push('/dashboard/crop-cycle/farming-tips');
+      router.push('/admin-dashboard/farming-tips');
     } catch (error) {
       console.error(`Failed to ${mode} farming tip:`, error);
       toast.error(`Failed to ${mode} farming tip`);
@@ -83,7 +83,7 @@ export function FarmingTipForm({ tip, mode }: IFarmingTipFormProps) {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => router.push('/dashboard/crop-cycle/farming-tips')}
+          onClick={() => router.push('/admin-dashboard/farming-tips')}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back

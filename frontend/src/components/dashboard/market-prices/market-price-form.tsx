@@ -69,7 +69,7 @@ export function MarketPriceForm({ price, mode }: IMarketPriceFormProps) {
         toast.success('Market price updated successfully');
       }
 
-      router.push('/dashboard/crop-cycle/market-prices');
+      router.push('/admin-dashboard/market-prices');
     } catch (error) {
       console.error(`Failed to ${mode} market price:`, error);
       toast.error(`Failed to ${mode} market price`);
@@ -84,7 +84,7 @@ export function MarketPriceForm({ price, mode }: IMarketPriceFormProps) {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => router.push('/dashboard/crop-cycle/market-prices')}
+          onClick={() => router.push('/admin-dashboard/market-prices')}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back

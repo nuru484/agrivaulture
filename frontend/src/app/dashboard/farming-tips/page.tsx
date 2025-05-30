@@ -1,21 +1,8 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { FarmingTipList } from '@/components/dashboard/farming-tips/farming-tip-list';
-import { Plus } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
+
 
 export default function FarmingTipsPage() {
-  const router = useRouter();
-   const user = useSelector((state: RootState) => state.auth.user);
-
-  const isAdmin = user?.role === 'ADMIN';
-
-  const handleCreateNew = () => {
-    router.push('/dashboard/crop-cycle/farming-tips/create');
-  };
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col gap-6">
@@ -26,12 +13,7 @@ export default function FarmingTipsPage() {
               Explore expert farming tips to enhance your crop management
             </p>
           </div>
-          {isAdmin && (
-            <Button onClick={handleCreateNew}>
-              <Plus className="mr-2 h-4 w-4" />
-              Create New Tip
-            </Button>
-          )}
+        
         </div>
 
         <FarmingTipList />
