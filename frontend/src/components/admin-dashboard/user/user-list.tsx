@@ -1,4 +1,3 @@
-// src/components/admin-dashboard/user/user-list.tsx
 'use client';
 import { format } from 'date-fns';
 import { Shield, Trash2 } from 'lucide-react';
@@ -16,10 +15,11 @@ import {
 import { IUser } from '@/types/user';
 
 interface UserListProps {
-  currentUserId?: string; 
+  currentUserId?: string;
+  numberOfUsers?: number; 
 }
 
-export function UserList({ currentUserId }: UserListProps) {
+export function UserList({ currentUserId, numberOfUsers }: UserListProps) {
   const { data, error, isLoading, isFetching } = useGetUsersListQuery();
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
   const [updateUserRole, { isLoading: isUpdatingRole }] = useUpdateUserRoleMutation();
@@ -53,7 +53,7 @@ export function UserList({ currentUserId }: UserListProps) {
   if (isLoading) {
     return (
       <div className="space-y-3">
-        {Array.from({ length: 5 }).map((_, i) => (
+        {Array.from({ length: numberOfUsers || 5 }).map((_, i) => (
           <Skeleton key={i} className="h-12 w-full rounded-lg" />
         ))}
       </div>
@@ -69,8 +69,9 @@ export function UserList({ currentUserId }: UserListProps) {
   }
 
   const users = data?.data || [];
+  const displayedUsers = typeof numberOfUsers === 'number' && numberOfUsers > 0 ? users.slice(0, numberOfUsers) : users;
 
-  if (!users.length) {
+  if (!displayedUsers.length) {
     return (
       <div className="text-center py-12">
         <p className="text-muted-foreground mb-4">No users found.</p>
@@ -93,7 +94,7 @@ export function UserList({ currentUserId }: UserListProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map((user: IUser) => (
+          {displayedUsers.map((user: IUser) => (
             <TableRow key={user.id}>
               <TableCell className="font-medium">
                 {user.name}
