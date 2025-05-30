@@ -17,6 +17,8 @@ export const userApi = apiSlice.injectEndpoints({
       providesTags: ['User'],
     }),
 
+    
+
     getUsersList: builder.query<IUsersResponse, void>({
       query: () => ({
         url: '/users',
