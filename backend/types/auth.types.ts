@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request } from "express";
 
 export interface ILoginRequest extends Request {
   body: {
@@ -6,11 +6,6 @@ export interface ILoginRequest extends Request {
     phone: string;
   };
 }
-
-// export interface IUserLoginInput {
-//   password: string;
-//   phone: string;
-// }
 
 export interface ITokenPayload {
   id: string;

@@ -1,3 +1,4 @@
+// server.ts
 require('dotenv').config();
 import express from 'express';
 import ENV from './src/config/env';
