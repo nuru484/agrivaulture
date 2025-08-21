@@ -1,3 +1,4 @@
+// src/redux/farmin-tips/farmingTipApi.ts
 import { apiSlice } from '../apiSlice';
 import {
   IFarmingTipResponse,

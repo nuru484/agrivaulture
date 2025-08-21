@@ -1,3 +1,4 @@
+//src/types/farming-tips/farming-tip.ts
 export interface IFarmingTip {
   id: string;
   tip: string;
@@ -25,6 +26,7 @@ export interface ICreateFarmingTipRequest {
   date: string;
 }
 
-export interface IUpdateFarmingTipRequest extends Partial<ICreateFarmingTipRequest> {
+export interface IUpdateFarmingTipRequest
+  extends Partial<ICreateFarmingTipRequest> {
   id: string;
 }

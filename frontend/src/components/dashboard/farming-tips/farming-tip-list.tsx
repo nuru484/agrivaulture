@@ -1,8 +1,9 @@
-'use client';
-import { useGetAllFarmingTipsQuery } from '@/redux/farmin-tips/farmingTipApi';
-import { FarmingTipListItem } from './farming-tip-list-item';
-import { IFarmingTip } from '@/types/farming-tips/farming-tip';
-import { Skeleton } from '@/components/ui/skeleton';
+// src/components/dashboard/farming-tips/farming-tip-list.tsx
+"use client";
+import { useGetAllFarmingTipsQuery } from "@/redux/farmin-tips/farmingTipApi";
+import { FarmingTipListItem } from "./farming-tip-list-item";
+import { IFarmingTip } from "@/types/farming-tips/farming-tip";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function FarmingTipList() {
   const { data, error, isLoading, isFetching } = useGetAllFarmingTipsQuery();
@@ -21,7 +22,9 @@ export function FarmingTipList() {
     return (
       <div className="text-center py-12">
         <p className="text-muted-foreground mb-4">
-          {error ? 'Failed to load farming tips. Please try again.' : 'No farming tips found.'}
+          {error
+            ? "Failed to load farming tips. Please try again."
+            : "No farming tips found."}
         </p>
       </div>
     );

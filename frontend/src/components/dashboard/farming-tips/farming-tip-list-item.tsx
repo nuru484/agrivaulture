@@ -1,16 +1,17 @@
-'use client';
-import { useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { useSelector } from 'react-redux';
-import { format } from 'date-fns';
-import { RootState } from '@/redux/store';
-import { useDeleteFarmingTipMutation } from '@/redux/farmin-tips/farmingTipApi';
-import { IFarmingTip } from '@/types/farming-tips/farming-tip';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Calendar, Crop, MapPin, Eye, Edit, Trash2 } from 'lucide-react';
-import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
-import toast from 'react-hot-toast';
+// src/components/dashboard/farming-tips/farming-tip-list-item.tsx
+"use client";
+import { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useSelector } from "react-redux";
+import { format } from "date-fns";
+import { RootState } from "@/redux/store";
+import { useDeleteFarmingTipMutation } from "@/redux/farmin-tips/farmingTipApi";
+import { IFarmingTip } from "@/types/farming-tips/farming-tip";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Calendar, Crop, MapPin, Eye, Edit, Trash2 } from "lucide-react";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
+import toast from "react-hot-toast";
 
 interface IFarmingTipListItemProps {
   tip: IFarmingTip;
@@ -20,12 +21,13 @@ export function FarmingTipListItem({ tip }: IFarmingTipListItemProps) {
   const router = useRouter();
   const pathname = usePathname();
   const user = useSelector((state: RootState) => state.auth.user);
-  const isAdmin = user?.role === 'ADMIN';
-  const [deleteFarmingTip, { isLoading: isDeleting }] = useDeleteFarmingTipMutation();
+  const isAdmin = user?.role === "ADMIN";
+  const [deleteFarmingTip, { isLoading: isDeleting }] =
+    useDeleteFarmingTipMutation();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleView = () => {
-    if (pathname.startsWith('/admin-dashboard')) {
+    if (pathname.startsWith("/admin-dashboard")) {
       router.push(`/admin-dashboard/farming-tips/${tip.id}/detail`);
     } else {
       router.push(`/dashboard/farming-tips/${tip.id}/detail`);
@@ -39,23 +41,24 @@ export function FarmingTipListItem({ tip }: IFarmingTipListItemProps) {
   const handleDelete = async () => {
     try {
       await deleteFarmingTip(tip.id).unwrap();
-      toast.success('Farming tip deleted successfully');
+      toast.success("Farming tip deleted successfully");
       setShowDeleteDialog(false);
     } catch (error) {
-      console.error('Failed to delete farming tip:', error);
-      toast.error('Failed to delete farming tip');
+      console.error("Failed to delete farming tip:", error);
+      toast.error("Failed to delete farming tip");
     }
   };
 
   const formatDate = (dateString: string) => {
-    return format(new Date(dateString), 'MMM dd, yyyy');
+    return format(new Date(dateString), "MMM dd, yyyy");
   };
 
   // Truncate tip text to 50 characters
-  const truncatedTip = tip.tip.length > 50 ? `${tip.tip.slice(0, 47)}...` : tip.tip;
+  const truncatedTip =
+    tip.tip.length > 50 ? `${tip.tip.slice(0, 47)}...` : tip.tip;
 
   // Determine if Edit and Delete buttons should be shown
-  const showEditDeleteButtons = isAdmin && !pathname.startsWith('/dashboard');
+  const showEditDeleteButtons = isAdmin && !pathname.startsWith("/dashboard");
 
   return (
     <>
@@ -69,13 +72,17 @@ export function FarmingTipListItem({ tip }: IFarmingTipListItemProps) {
               {tip.crop && (
                 <div className="flex items-center gap-1">
                   <Crop className="h-3 w-3 sm:h-4 sm:w-4" />
-                  <span className="truncate max-w-[60px] sm:max-w-none">{tip.crop}</span>
+                  <span className="truncate max-w-[60px] sm:max-w-none">
+                    {tip.crop}
+                  </span>
                 </div>
               )}
               {tip.region && (
                 <div className="flex items-center gap-1">
                   <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
-                  <span className="truncate max-w-[60px] sm:max-w-none">{tip.region}</span>
+                  <span className="truncate max-w-[60px] sm:max-w-none">
+                    {tip.region}
+                  </span>
                 </div>
               )}
               <div className="flex items-center gap-1">
