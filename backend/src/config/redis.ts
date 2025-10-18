@@ -23,7 +23,7 @@ const cacheMiddleware =
       if (data) {
         logger.info('Cache hit');
 
-        client.expire(cacheKey, 3600); // Extend TTL on access
+        client.expire(cacheKey, 3600);
 
         return res.status(200).json({
           message: `${cacheKey} successfully fetched from redis`,
