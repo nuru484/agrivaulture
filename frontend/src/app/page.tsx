@@ -1,8 +1,9 @@
-import Navbar from '@/components/landingPage/Navbar';
-import Footer from '@/components/landingPage/Footer';
-import Hero from '@/components/landingPage/Hero';
-import Testimonials from '@/components/landingPage/Testimonial';
-import { Features } from '@/components/landingPage/Features';
+// src/app/page.tsx
+import Navbar from "@/components/landingPage/Navbar";
+import Footer from "@/components/landingPage/Footer";
+import Hero from "@/components/landingPage/Hero";
+import Testimonials from "@/components/landingPage/Testimonial";
+import { Features } from "@/components/landingPage/Features";
 
 export default function Page() {
   return (
