@@ -1,21 +1,22 @@
-'use client';
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import toast from 'react-hot-toast';
-import SignupForm from '@/components/authentication/SignupForm';
+"use client";
+import React from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
+import SignupForm from "@/components/authentication/SignupForm";
 import {
   signupFormSchema,
   ISignupFormSchema,
-} from '@/validation/authentication/signupValidation';
-import { useRegisterUserMutation } from '@/redux/auth/authApi';
-import { extractApiErrorMessage } from '@/utils/extractApiErrorMessage';
-import { Button } from '@/components/ui/button';
+} from "@/validation/authentication/signupValidation";
+import { useRegisterUserMutation } from "@/redux/auth/authApi";
+import { extractApiErrorMessage } from "@/utils/extractApiErrorMessage";
+import { Button } from "@/components/ui/button";
 
 interface SignupDialogProps {
   triggerProps?: React.ComponentProps<typeof Button>;
+  showTrigger?: boolean;
 }
 export default function SignupDialog({ triggerProps }: SignupDialogProps) {
   const router = useRouter();
@@ -29,12 +30,12 @@ export default function SignupDialog({ triggerProps }: SignupDialogProps) {
   async function onSubmit(data: z.infer<typeof signupFormSchema>) {
     try {
       await registerUser(data).unwrap();
-      toast.success('Signup Successful');
-      router.push('/dashboard');
+      toast.success("Signup Successful");
+      router.push("/dashboard");
     } catch (err) {
-      console.error('Signup error:', err);
+      console.error("Signup error:", err);
       const apiError = extractApiErrorMessage(err);
-      toast.error(apiError || 'Signup Failed. Please try again.');
+      toast.error(apiError || "Signup Failed. Please try again.");
     }
   }
 
@@ -44,6 +45,7 @@ export default function SignupDialog({ triggerProps }: SignupDialogProps) {
       onSubmit={onSubmit}
       isLoading={isLoading}
       triggerProps={triggerProps}
+      showTrigger={false}
     />
   );
 }

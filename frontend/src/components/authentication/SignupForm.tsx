@@ -1,6 +1,6 @@
-'use client';
-import React from 'react';
-import { Button } from '@/components/ui/button';
+"use client";
+import React from "react";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -8,33 +8,34 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Loader2, Eye, EyeOff } from 'lucide-react';
-import { ISignupFormSchema } from '@/validation/authentication/signupValidation';
-import { UseFormReturn } from 'react-hook-form';
-import { regionsInGhana } from './constants';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { useDispatch, useSelector } from 'react-redux';
+} from "@/components/ui/select";
+import { Loader2, Eye, EyeOff } from "lucide-react";
+import { ISignupFormSchema } from "@/validation/authentication/signupValidation";
+import { UseFormReturn } from "react-hook-form";
+import { regionsInGhana } from "./constants";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useDispatch, useSelector } from "react-redux";
 import {
   closeAllDialogs,
   openSignupDialog,
   openLoginDialog,
   selectActiveDialog,
-} from '@/redux/auth/authDialogSlice';
+} from "@/redux/auth/authDialogSlice";
 
 interface SignupFormContentProps {
   form: UseFormReturn<ISignupFormSchema>;
   onSubmit: (data: ISignupFormSchema) => Promise<void>;
   isLoading: boolean;
   triggerProps?: React.ComponentProps<typeof Button>;
+  showTrigger?: boolean;
 }
 
 export default function SignupForm({
@@ -42,6 +43,7 @@ export default function SignupForm({
   onSubmit,
   isLoading,
   triggerProps = {},
+  showTrigger = true,
 }: SignupFormContentProps) {
   const [showPassword, setShowPassword] = React.useState(false);
   const dispatch = useDispatch();
@@ -61,17 +63,19 @@ export default function SignupForm({
     dispatch(openLoginDialog());
   };
 
-  const isOpen = activeDialog === 'signup';
+  const isOpen = activeDialog === "signup";
 
   return (
     <>
-      <Button
-        size="sm"
-        onClick={() => dispatch(openSignupDialog())}
-        {...triggerProps}
-      >
-        Sign Up
-      </Button>
+      {showTrigger && (
+        <Button
+          size="sm"
+          onClick={() => dispatch(openSignupDialog())}
+          {...triggerProps}
+        >
+          Sign Up
+        </Button>
+      )}
 
       <Dialog
         open={isOpen}
@@ -157,7 +161,7 @@ export default function SignupForm({
                     <FormControl>
                       <div className="relative">
                         <Input
-                          type={showPassword ? 'text' : 'password'}
+                          type={showPassword ? "text" : "password"}
                           className="bg-muted pr-10"
                           {...field}
                         />
@@ -181,7 +185,7 @@ export default function SignupForm({
               />
 
               {/* Hidden Role Field */}
-              <input type="hidden" value="FARMER" {...form.register('role')} />
+              <input type="hidden" value="FARMER" {...form.register("role")} />
 
               <Button
                 type="submit"
@@ -194,13 +198,13 @@ export default function SignupForm({
                     Processing Signup...
                   </>
                 ) : (
-                  'Sign Up'
+                  "Sign Up"
                 )}
               </Button>
             </form>
           </Form>
           <p className="mt-4 text-foreground text-sm">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Button
               className="bg-transparent border-none underline text-foreground hover:text-muted-foreground hover:bg-transparent p-0 h-auto cursor-pointer"
               onClick={handleSwitchToLogin}

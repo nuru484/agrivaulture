@@ -1,7 +1,7 @@
-'use client';
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+"use client";
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import {
   Form,
   FormControl,
@@ -9,25 +9,26 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Loader2, Eye, EyeOff } from 'lucide-react';
-import { ILoginFormSchema } from '@/validation/authentication/loginValidation';
-import { UseFormReturn } from 'react-hook-form';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { useDispatch, useSelector } from 'react-redux';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Loader2, Eye, EyeOff } from "lucide-react";
+import { ILoginFormSchema } from "@/validation/authentication/loginValidation";
+import { UseFormReturn } from "react-hook-form";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useDispatch, useSelector } from "react-redux";
 import {
   closeAllDialogs,
   openSignupDialog,
   openLoginDialog,
   selectActiveDialog,
-} from '@/redux/auth/authDialogSlice';
+} from "@/redux/auth/authDialogSlice";
 
 interface LoginFormContentProps {
   form: UseFormReturn<ILoginFormSchema>;
   onSubmit: (data: ILoginFormSchema) => Promise<void>;
   isLoading: boolean;
   triggerProps?: React.ComponentProps<typeof Button>;
+  showTrigger?: boolean;
 }
 
 export default function LoginForm({
@@ -35,6 +36,7 @@ export default function LoginForm({
   onSubmit,
   isLoading,
   triggerProps = {},
+  showTrigger = true,
 }: LoginFormContentProps) {
   const [showPassword, setShowPassword] = React.useState(false);
   const dispatch = useDispatch();
@@ -54,17 +56,19 @@ export default function LoginForm({
     dispatch(openSignupDialog());
   };
 
-  const isOpen = activeDialog === 'login';
+  const isOpen = activeDialog === "login";
 
   return (
     <>
-      <Button
-        size="sm"
-        onClick={() => dispatch(openLoginDialog())}
-        {...triggerProps}
-      >
-        Log In
-      </Button>
+      {showTrigger && (
+        <Button
+          size="sm"
+          onClick={() => dispatch(openLoginDialog())}
+          {...triggerProps}
+        >
+          Log In
+        </Button>
+      )}
 
       <Dialog
         open={isOpen}
@@ -104,7 +108,7 @@ export default function LoginForm({
                     <FormControl>
                       <div className="relative">
                         <Input
-                          type={showPassword ? 'text' : 'password'}
+                          type={showPassword ? "text" : "password"}
                           className="bg-muted pr-10"
                           {...field}
                         />
@@ -138,14 +142,14 @@ export default function LoginForm({
                     Processing Login...
                   </>
                 ) : (
-                  'Log In'
+                  "Log In"
                 )}
               </Button>
             </form>
           </Form>
           <div className="mt-4 text-foreground text-sm space-y-2">
             <p>
-              Forgot your password?{' '}
+              Forgot your password?{" "}
               <Link
                 href="/forgot-password"
                 className="underline hover:text-muted-foreground"
@@ -154,7 +158,7 @@ export default function LoginForm({
               </Link>
             </p>
             <p>
-              Don&apos;t have an account?{' '}
+              Don&apos;t have an account?{" "}
               <Button
                 className="bg-transparent border-none underline text-foreground hover:text-muted-foreground hover:bg-transparent p-0 h-auto cursor-pointer"
                 onClick={handleSwitchToSignup}
