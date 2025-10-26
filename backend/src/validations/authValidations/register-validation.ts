@@ -2,7 +2,6 @@
 import { validator } from "../../validations/validation-factory.ts";
 import { ValidationChain } from "express-validator";
 
-// Validator for creating a new user
 export const registerValidation: ValidationChain[] = [
   validator.string("name", {
     required: true,
@@ -34,7 +33,6 @@ export const registerValidation: ValidationChain[] = [
   }),
 ];
 
-// Validator for updating an existing user
 export const updateProfileValidation: ValidationChain[] = [
   validator.string("name", {
     required: false,
@@ -55,7 +53,7 @@ export const updateProfileValidation: ValidationChain[] = [
     requireSpecialChars: true,
     customMessage: "Password must be a strong password",
   }),
-  validator.enum("role", ["FARMER", "ADMIN", "USER"], {
+  validator.enum("role", ["FARMER", "ADMIN"], {
     required: false,
   }),
   validator.string("region", {

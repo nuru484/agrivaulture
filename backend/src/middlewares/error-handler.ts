@@ -2,9 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import logger from '../utils/logger';
 import ENV from '../config/env';
 
-/**
- * Error severity levels for better logging and monitoring
- */
+
 export enum ErrorSeverity {
   LOW = 'low',
   MEDIUM = 'medium',
@@ -12,9 +10,7 @@ export enum ErrorSeverity {
   CRITICAL = 'critical',
 }
 
-/**
- * Enhanced CustomError class with additional context for better debugging
- */
+
 export class CustomError extends Error {
   readonly status: number;
   readonly layer: string;
@@ -42,7 +38,6 @@ export class CustomError extends Error {
     this.code = options.code;
     this.context = options.context;
 
-    // Maintains proper stack trace
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, this.constructor);
     }
@@ -78,9 +73,7 @@ const sanitizeErrorData = (data: unknown): unknown => {
   if (typeof data === 'object' && data !== null) {
     const sanitized: Record<string, unknown> = {};
 
-    // Deep copy and sanitize object properties
     Object.entries(data as Record<string, unknown>).forEach(([key, value]) => {
-      // Skip sensitive fields
       if (
         ['password', 'token', 'secret', 'auth', 'key', 'credit', 'ssn'].some(
           (k) => key.toLowerCase().includes(k)

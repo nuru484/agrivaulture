@@ -1,6 +1,3 @@
-/**
- * Input interface for creating or updating a CropRecord
- */
 interface ICropRecordInput {
   cropType: string;
   plantingDate: string | Date;
@@ -8,9 +5,6 @@ interface ICropRecordInput {
   notes?: string | null;
 }
 
-/**
- * Response interface for retrieving a CropRecord
- */
 interface ICropRecordResponse {
   id: string;
   userId: string;

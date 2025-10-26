@@ -21,12 +21,11 @@ export interface IUserProfile {
   [key: string]: any;
 }
 
-// Interfaces for type safety
 export interface IUserRegistrationInput {
   password: string;
   region: string;
   name: string;
-  role: UserRole; // Enum for user roles
+  role: UserRole; 
   phone: string;
 }
 
@@ -35,7 +34,7 @@ export interface IUserResponseData {
     city: string;
   email: string;
   name: string;
-  role: UserRole; // Enum for user roles
+  role: UserRole;
   phone: string;
   profilePicture?: string;
   bio: string;

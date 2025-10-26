@@ -1,26 +1,16 @@
 // src/controllers/authentication/register.ts
-import { Request, Response, NextFunction } from 'express';
-import bcrypt from 'bcrypt';
-import prisma from '../../config/prismaClient';
-import validationMiddleware from '../../middlewares/validation';
-import { registerValidation } from '../../validations/authValidations/register-validation';
+import { Request, Response, NextFunction } from "express";
+import bcrypt from "bcrypt";
+import prisma from "../../config/prismaClient";
+import validationMiddleware from "../../middlewares/validation";
+import { registerValidation } from "../../validations/authValidations/register-validation";
 import {
   IUserRegistrationInput,
   IUserResponseData,
-} from 'types/user-profile.types.js';
+} from "types/user-profile.types.js";
+import { HTTP_STATUS_CODES, BCRYPT_SALT_ROUNDS } from "../../config/constants";
 
-// Constants for configuration
-const BCRYPT_SALT_ROUNDS = 10;
-const HTTP_STATUS = {
-  CREATED: 201,
-  NOT_FOUND: 404,
-  CONFLICT: 409,
-};
-
-/**
- * Controller function for user registration
- */
-const handleRegisterUser = async (
+export const handleRegisterUser = async (
   req: Request<{}, {}, IUserRegistrationInput>,
   res: Response,
   next: NextFunction
@@ -45,8 +35,8 @@ const handleRegisterUser = async (
     const { password, ...userWithoutPassword } = user;
 
     // Send response
-    res.status(HTTP_STATUS.CREATED).json({
-      message: 'Registration successful.',
+    res.status(HTTP_STATUS_CODES.CREATED).json({
+      message: "Registration successful.",
       data: userWithoutPassword as IUserResponseData,
     });
   } catch (error) {

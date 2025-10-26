@@ -1,23 +1,23 @@
 // src/controllers/authentication/login.ts
-import { Response, NextFunction } from 'express';
-import { compare } from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import ENV from '../../config/env';
-import prisma from '../../config/prismaClient';
+import { Response, NextFunction } from "express";
+import { compare } from "bcrypt";
+import jwt from "jsonwebtoken";
+import ENV from "../../config/env";
+import prisma from "../../config/prismaClient";
 import {
   asyncHandler,
   NotFoundError,
   UnauthorizedError,
-} from '../../middlewares/error-handler';
-import { assertEnv } from '../../config/env';
-import { CookieManager } from '../../utils/CookieManager';
+} from "../../middlewares/error-handler";
+import { assertEnv } from "../../config/env";
+import { CookieManager } from "../../utils/CookieManager";
 import {
   ILoginRequest,
   ITokenPayload,
   IRefreshTokenPayload,
-} from 'types/auth.types';
+} from "types/auth.types";
 
-const login = asyncHandler(
+export const login = asyncHandler(
   async (
     req: ILoginRequest,
     res: Response,
@@ -33,32 +33,32 @@ const login = asyncHandler(
       });
 
       if (!user) {
-        throw new NotFoundError('Invalid credentials');
+        throw new NotFoundError("Invalid credentials");
       }
 
       if (!password || (user && !user.password)) {
-        throw new Error('Password or hash missing');
+        throw new Error("Password or hash missing");
       }
 
       const isPasswordValid = await compare(password, user.password);
 
       if (!isPasswordValid) {
-        throw new UnauthorizedError('Invalid credentials');
+        throw new UnauthorizedError("Invalid credentials");
       }
 
       const accessToken = jwt.sign(
         { id: user.id, role: user.role } as ITokenPayload,
-        assertEnv(ENV.ACCESS_TOKEN_SECRET, 'ACCESS_TOKEN_SECRET'),
+        assertEnv(ENV.ACCESS_TOKEN_SECRET, "ACCESS_TOKEN_SECRET"),
         {
-          expiresIn: '15m',
+          expiresIn: "15m",
         }
       );
 
       const refreshToken = jwt.sign(
         { id: user.id, role: user.role } as IRefreshTokenPayload,
-        assertEnv(ENV.REFRESH_TOKEN_SECRET, 'REFRESH_TOKEN_SECRET'),
+        assertEnv(ENV.REFRESH_TOKEN_SECRET, "REFRESH_TOKEN_SECRET"),
         {
-          expiresIn: '7d',
+          expiresIn: "7d",
         }
       );
 
@@ -68,11 +68,9 @@ const login = asyncHandler(
 
       const { password: userPassWord, ...userWithoutPassword } = user;
 
-      res.json({ message: 'Login successful', user: userWithoutPassword });
+      res.json({ message: "Login successful", user: userWithoutPassword });
     } catch (error) {
       next(error);
     }
   }
 );
-
-export default login;

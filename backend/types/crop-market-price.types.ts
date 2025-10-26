@@ -1,6 +1,3 @@
-/**
- * Input interface for creating/updating a market price
- */
 export interface IMarketPriceInput {
   crop: string;
   region: string;
@@ -9,9 +6,6 @@ export interface IMarketPriceInput {
   date: string | Date;
 }
 
-/**
- * Response interface for market price data
- */
 export interface IMarketPriceResponse {
   id: string;
   crop: string;

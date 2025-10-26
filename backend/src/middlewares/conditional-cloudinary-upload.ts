@@ -19,7 +19,7 @@ const conditionalCloudinaryUpload = (
           (req.files as Record<string, Express.Multer.File[]>)[fieldName]
         ) &&
         (req.files as Record<string, Express.Multer.File[]>)[fieldName].length >
-          0); // for .fields()
+          0);
 
     if (hasFile) {
       return uploadMiddleware(req, res, next);

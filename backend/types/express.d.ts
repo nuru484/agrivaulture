@@ -1,13 +1,12 @@
 // types/express.d.ts
-import 'express';
-import { IUserProfile } from './user-profile.types';
+import "express";
+import { IUserProfile } from "./user-profile.types";
 
-declare module 'express' {
+declare module "express" {
   export interface Request {
     user?: IUserProfile;
   }
 }
-
 
 // Enum
 export enum Role {
@@ -15,8 +14,6 @@ export enum Role {
   ADMIN = "ADMIN",
   USER = "USER",
 }
-
-// Interfaces
 
 export interface User {
   id: string;

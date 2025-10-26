@@ -1,5 +1,5 @@
 // validations/validation-factory.ts.ts
-import { body, ValidationChain } from 'express-validator';
+import { body, ValidationChain } from "express-validator";
 
 // Define common validation options
 export interface BaseValidationOptions {
@@ -24,18 +24,18 @@ export interface DateValidationOptions extends BaseValidationOptions {
   maxDate?: Date;
   compareDateField?: string;
   compareDateOperation?:
-    | 'before'
-    | 'after'
-    | 'same'
-    | 'before-or-same'
-    | 'after-or-same';
+    | "before"
+    | "after"
+    | "same"
+    | "before-or-same"
+    | "after-or-same";
 }
 
 export interface ArrayValidationOptions extends BaseValidationOptions {
   minLength?: number;
   maxLength?: number;
   unique?: boolean;
-  itemType?: 'string' | 'number' | 'boolean' | 'object';
+  itemType?: "string" | "number" | "boolean" | "object";
 }
 
 export interface ObjectValidationOptions extends BaseValidationOptions {
@@ -129,7 +129,7 @@ class ValidationFactory {
       pattern,
       customMessage:
         customMessage ||
-        'Username can only contain letters, numbers, and underscores',
+        "Username can only contain letters, numbers, and underscores",
     });
   }
 
@@ -151,14 +151,14 @@ class ValidationFactory {
 
     const validation = this.string(fieldName, { required, maxLength })
       .isEmail()
-      .withMessage('Invalid email address')
+      .withMessage("Invalid email address")
       .normalizeEmail();
 
     if (allowDomains?.length) {
       validation.custom((email: string) => {
         if (!email) return true;
 
-        const domain = email.split('@')[1];
+        const domain = email.split("@")[1];
         if (!allowDomains.includes(domain)) {
           throw new Error(`Email domain ${domain} is not allowed`);
         }
@@ -170,7 +170,7 @@ class ValidationFactory {
       validation.custom((email: string) => {
         if (!email) return true;
 
-        const domain = email.split('@')[1];
+        const domain = email.split("@")[1];
         if (blockDomains.includes(domain)) {
           throw new Error(`Email domain ${domain} is not allowed`);
         }
@@ -187,7 +187,7 @@ class ValidationFactory {
    * @param options - Validation options for the password
    */
   password(
-    fieldName: string = 'password',
+    fieldName: string = "password",
     options: PasswordValidationOptions = {}
   ): ValidationChain {
     const {
@@ -209,25 +209,25 @@ class ValidationFactory {
     if (requireUppercase) {
       validation
         .matches(/[A-Z]/)
-        .withMessage('Password must contain at least one uppercase letter');
+        .withMessage("Password must contain at least one uppercase letter");
     }
 
     if (requireLowercase) {
       validation
         .matches(/[a-z]/)
-        .withMessage('Password must contain at least one lowercase letter');
+        .withMessage("Password must contain at least one lowercase letter");
     }
 
     if (requireNumbers) {
       validation
         .matches(/\d/)
-        .withMessage('Password must contain at least one number');
+        .withMessage("Password must contain at least one number");
     }
 
     if (requireSpecialChars) {
       validation
         .matches(/[@$!%*?&#]/)
-        .withMessage('Password must contain at least one special character');
+        .withMessage("Password must contain at least one special character");
     }
 
     return validation;
@@ -239,14 +239,14 @@ class ValidationFactory {
    * @param passwordFieldName - The name of the password field to compare against
    */
   confirmPassword(
-    confirmFieldName: string = 'confirmPassword',
-    passwordFieldName: string = 'password'
+    confirmFieldName: string = "confirmPassword",
+    passwordFieldName: string = "password"
   ): ValidationChain {
     return body(confirmFieldName)
       .exists({ checkFalsy: true })
-      .withMessage('Password confirmation is required')
+      .withMessage("Password confirmation is required")
       .custom((value: string, { req }) => value === req.body[passwordFieldName])
-      .withMessage('Passwords do not match');
+      .withMessage("Passwords do not match");
   }
 
   /**
@@ -285,7 +285,7 @@ class ValidationFactory {
         if (value < minDate) {
           throw new Error(
             `${fieldName} must be on or after ${
-              minDate.toISOString().split('T')[0]
+              minDate.toISOString().split("T")[0]
             }`
           );
         }
@@ -299,7 +299,7 @@ class ValidationFactory {
         if (value > maxDate) {
           throw new Error(
             `${fieldName} must be on or before ${
-              maxDate.toISOString().split('T')[0]
+              maxDate.toISOString().split("T")[0]
             }`
           );
         }
@@ -318,33 +318,33 @@ class ValidationFactory {
         if (!compareDate) return true;
 
         switch (compareDateOperation) {
-          case 'before':
+          case "before":
             if (value >= compareDate) {
               throw new Error(
                 `${fieldName} must be before ${compareDateField}`
               );
             }
             break;
-          case 'after':
+          case "after":
             if (value <= compareDate) {
               throw new Error(`${fieldName} must be after ${compareDateField}`);
             }
             break;
-          case 'same':
+          case "same":
             if (value.getTime() !== compareDate.getTime()) {
               throw new Error(
                 `${fieldName} must be the same as ${compareDateField}`
               );
             }
             break;
-          case 'before-or-same':
+          case "before-or-same":
             if (value > compareDate) {
               throw new Error(
                 `${fieldName} must be before or the same as ${compareDateField}`
               );
             }
             break;
-          case 'after-or-same':
+          case "after-or-same":
             if (value < compareDate) {
               throw new Error(
                 `${fieldName} must be after or the same as ${compareDateField}`
@@ -491,14 +491,14 @@ class ValidationFactory {
         .custom((array: any[]) => {
           return array.every((item) => {
             switch (itemType) {
-              case 'string':
-                return typeof item === 'string';
-              case 'number':
-                return typeof item === 'number';
-              case 'boolean':
-                return typeof item === 'boolean';
-              case 'object':
-                return typeof item === 'object' && item !== null;
+              case "string":
+                return typeof item === "string";
+              case "number":
+                return typeof item === "number";
+              case "boolean":
+                return typeof item === "boolean";
+              case "object":
+                return typeof item === "object" && item !== null;
               default:
                 return true;
             }
@@ -553,7 +553,7 @@ class ValidationFactory {
         })
         .withMessage(
           `${fieldName} must include required fields: ${requiredFields.join(
-            ', '
+            ", "
           )}`
         );
     }
@@ -573,14 +573,14 @@ class ValidationFactory {
     const {
       required = true,
       maxLength = 2083,
-      protocols = ['http', 'https'],
+      protocols = ["http", "https"],
     } = options;
 
     const validation = this.string(fieldName, { required, maxLength })
       .isURL({ protocols })
       .withMessage(
         `${fieldName} must be a valid URL with protocols: ${protocols.join(
-          ', '
+          ", "
         )}`
       );
 
@@ -601,7 +601,7 @@ class ValidationFactory {
     return this.string(fieldName, {
       required,
       pattern,
-      customMessage: 'Must be a valid phone number',
+      customMessage: "Must be a valid phone number",
     });
   }
 
@@ -628,7 +628,7 @@ class ValidationFactory {
 
     validation
       .custom((value: T) => allowedValues.includes(value))
-      .withMessage(`${fieldName} must be one of: ${allowedValues.join(', ')}`);
+      .withMessage(`${fieldName} must be one of: ${allowedValues.join(", ")}`);
 
     return validation;
   }

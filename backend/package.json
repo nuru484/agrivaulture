@@ -1,13 +1,16 @@
 {
-  "name": "backend",
+  "name": "agrivaulture-backend",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --env-file .env server.ts",
+    "clean": "rm -rf build",
+    "build": "npm run clean && npx tsc --diagnostics && cp -r generated build/ && echo 'Build completed successfully!'",
     "start": "node build/server.js",
-    "build": "npx tsc --diagnostics && cp -r generated build/ && echo 'Build completed successfully!'",
-    "migrate": "npx prisma migrate dev --name init"
+    "startDev": "node --env-file .env build/server.js",
+    "migrate": "npx prisma migrate dev --name init",
+    "seed": "tsx prisma/seed.ts",
+    "deploy": "npm install && npx prisma generate && npx prisma migrate deploy && npm run seed && npm run build"
   },
   "keywords": [],
   "author": "Nurudeen Abdul-Majeed",
@@ -33,16 +36,13 @@
     "cloudinary": "^2.6.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "express-rate-limit": "^7.5.0",
     "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.2",
-    "nodemailer": "^6.10.1",
     "pino": "^9.6.0",
-    "pino-pretty": "^13.0.0",
-    "redis": "^4.7.0"
+    "pino-pretty": "^13.0.0"
   }
 }

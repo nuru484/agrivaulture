@@ -1,4 +1,3 @@
-// Constants for configuration
 export const HTTP_STATUS_CODES = {
   OK: 200,
   CREATED: 201,
@@ -6,3 +5,6 @@ export const HTTP_STATUS_CODES = {
   NOT_FOUND: 404,
   FORBIDDEN: 403,
 };
+
+
+export const BCRYPT_SALT_ROUNDS = 10;

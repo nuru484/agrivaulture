@@ -1,6 +1,3 @@
-/**
- * Input interface for creating or updating a yield
- */
 interface IYieldInput {
   cropRecordId: string;
   quantity: number;
@@ -8,9 +5,6 @@ interface IYieldInput {
   date: string | Date;
 }
 
-/**
- * Response interface for yield data
- */
 interface IYieldResponse {
   id: string;
   cropRecordId: string;

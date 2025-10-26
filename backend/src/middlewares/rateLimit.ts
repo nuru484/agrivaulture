@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import rateLimit, { RateLimitRequestHandler } from 'express-rate-limit';
 import { CustomError, ErrorSeverity } from './error-handler';
 
-// Custom rate limit exceeded error
 export class RateLimitExceededError extends CustomError {
   constructor(message = 'Rate limit exceeded') {
     super(429, message, {
@@ -13,7 +12,6 @@ export class RateLimitExceededError extends CustomError {
   }
 }
 
-// Create enhanced memory-based rate limiter
 export const createRateLimiter = (
   windowMs: number = 15 * 60 * 1000,
   maxRequests: number = 100,
@@ -26,32 +24,27 @@ export const createRateLimiter = (
     standardHeaders: true,
     legacyHeaders: false,
 
-    // Advanced key generation - combine IP with user ID when available
     keyGenerator: (req: Request): string => {
       const userId = req.user?.id ? `-user-${req.user.id}` : '';
       return `${req.ip}${userId}`;
     },
 
-    // Custom handler for rate limit exceeded
     handler: (_req: Request, res: Response, next: NextFunction) => {
       const retryAfter = Math.ceil(windowMs / 1000);
       res.set('Retry-After', String(retryAfter));
       next(new RateLimitExceededError(message));
     },
 
-    // Skip rate limiting for certain requests
     skip: (req: Request) => {
       // Skip health checks
       if (req.path === '/health' || req.path === '/ping') return true;
 
-      // Skip for internal requests with secret header
       const bypassToken = req.get('X-Rate-Limit-Bypass');
       return bypassToken === process.env.RATE_LIMIT_BYPASS_SECRET;
     },
   });
 };
 
-// Different limiters for different endpoints
 export const rateLimiter = createRateLimiter(
   15 * 60 * 1000, // 15 minutes
   100, // 100 requests

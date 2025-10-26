@@ -3,9 +3,6 @@ import { Request, Response, NextFunction } from 'express';
 import { validationResult, ValidationError } from 'express-validator';
 import { ValidationError as CustomValidationError } from './error-handler';
 
-/**
- * Middleware to check validation results and pass errors to error handler
- */
 
 // Type guards
 function isStandardValidationError(

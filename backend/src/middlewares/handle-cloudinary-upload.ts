@@ -4,7 +4,6 @@ import { ICloudinaryUploadOptions } from 'types/cloudinary.types';
 import { cloudinaryService } from '../config/claudinary';
 import { isValidBase64Image } from '../utils/validate-base64-image';
 
-// Custom request interface that extends Express Request
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
   files?:
@@ -12,12 +11,7 @@ interface MulterRequest extends Request {
     | { [fieldname: string]: Express.Multer.File[] };
 }
 
-/**
- * Factory function to create middleware for handling file uploads to Cloudinary
- * @param defaultOptions - Default Cloudinary upload options
- * @param uploadedResultsName - The key to store upload results in req.body
- * @returns Express middleware
- */
+
 export const handleCloudinaryUpload = (
   defaultOptions: Partial<ICloudinaryUploadOptions> = {},
   uploadedResultsName: string
