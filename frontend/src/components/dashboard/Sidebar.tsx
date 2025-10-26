@@ -1,14 +1,13 @@
-'use client';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   BarChart3,
   CalendarDays,
   Cloud,
   LayoutDashboard,
   Sprout,
-} from 'lucide-react';
-
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -18,33 +17,33 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from '@/components/ui/sidebar';
+} from "@/components/ui/sidebar";
+import Image from "next/image";
 
-// Navigation items with their paths and icons
 const navigationItems = [
   {
-    name: 'Dashboard',
-    path: '/dashboard',
+    name: "Dashboard",
+    path: "/dashboard",
     icon: LayoutDashboard,
   },
   {
-    name: 'Weather',
-    path: '/dashboard/weather',
+    name: "Weather",
+    path: "/dashboard/weather",
     icon: Cloud,
   },
   {
-    name: 'Market Prices',
-    path: '/dashboard/market-prices',
+    name: "Market Prices",
+    path: "/dashboard/market-prices",
     icon: BarChart3,
   },
   {
-    name: 'Farming Tips',
-    path: '/dashboard/farming-tips',
+    name: "Farming Tips",
+    path: "/dashboard/farming-tips",
     icon: Sprout,
   },
   {
-    name: 'Crop Cycle',
-    path: '/dashboard/crop-cycle',
+    name: "Crop Cycle",
+    path: "/dashboard/crop-cycle",
     icon: CalendarDays,
   },
 ];
@@ -59,8 +58,8 @@ export default function DashboardSidebar() {
     >
       <SidebarHeader className="flex items-center px-6 py-5 border-b border-sidebar-border/20">
         <SidebarMenuButton className="flex items-center gap-3 text-sidebar-foreground">
-          <Sprout className="h-7 w-7 text-sidebar-primary" />
-          <span className="text-xl font-bold">AgriInfo</span>
+          <Image src="/logo.png" alt="Logo" width={40} height={40} />{" "}
+          <span className="text-xl font-bold">Agrivaulture</span>
         </SidebarMenuButton>
       </SidebarHeader>
 
@@ -69,7 +68,7 @@ export default function DashboardSidebar() {
           {navigationItems.map((item) => {
             const isActive =
               pathname === item.path ||
-              (item.path !== '/dashboard' && pathname?.startsWith(item.path));
+              (item.path !== "/dashboard" && pathname?.startsWith(item.path));
             return (
               <SidebarMenuItem key={item.path}>
                 <SidebarMenuButton
@@ -78,14 +77,14 @@ export default function DashboardSidebar() {
                   tooltip={item.name}
                   className={`px-4 py-3 gap-4 hover:bg-sidebar-foreground/10 transition-colors ${
                     isActive
-                      ? 'bg-sidebar-primary/10 text-sidebar-primary font-medium border-l-4 border-sidebar-primary'
-                      : 'text-sidebar-foreground/90'
+                      ? "bg-sidebar-primary/10 text-sidebar-primary font-medium border-l-4 border-sidebar-primary"
+                      : "text-sidebar-foreground/90"
                   }`}
                 >
                   <Link href={item.path} className="flex items-center w-full">
                     <item.icon
                       className={`h-6 w-6 ${
-                        isActive ? 'text-sidebar-primary' : ''
+                        isActive ? "text-sidebar-primary" : ""
                       }`}
                     />
                     <span className="ml-3">{item.name}</span>

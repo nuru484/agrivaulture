@@ -1,14 +1,7 @@
-'use client';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import {
-  BarChart3,
-  Cloud,
-  LayoutDashboard,
-  Sprout,
-  Users,
-} from 'lucide-react';
-
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { BarChart3, Cloud, LayoutDashboard, Sprout, Users } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -18,33 +11,33 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from '@/components/ui/sidebar';
+} from "@/components/ui/sidebar";
+import Image from "next/image";
 
-// Navigation items with their paths and icons
 const navigationItems = [
   {
-    name: 'Dashboard',
-    path: '/admin-dashboard',
+    name: "Dashboard",
+    path: "/admin-dashboard",
     icon: LayoutDashboard,
   },
   {
-    name: 'Weather',
-    path: '/admin-dashboard/weather',
+    name: "Weather",
+    path: "/admin-dashboard/weather",
     icon: Cloud,
   },
   {
-    name: 'Market Prices',
-    path: '/admin-dashboard/market-prices',
+    name: "Market Prices",
+    path: "/admin-dashboard/market-prices",
     icon: BarChart3,
   },
   {
-    name: 'Farming Tips',
-    path: '/admin-dashboard/farming-tips',
+    name: "Farming Tips",
+    path: "/admin-dashboard/farming-tips",
     icon: Sprout,
   },
   {
-    name: 'Users',
-    path: '/admin-dashboard/users',
+    name: "Users",
+    path: "/admin-dashboard/users",
     icon: Users,
   },
 ];
@@ -59,8 +52,8 @@ export default function AdminSidebar() {
     >
       <SidebarHeader className="flex items-center px-6 py-5 border-b border-sidebar-border/20">
         <SidebarMenuButton className="flex items-center gap-3 text-sidebar-foreground">
-          <Sprout className="h-7 w-7 text-sidebar-primary" />
-          <span className="text-xl font-bold">AgriInfo Admin</span>
+          <Image src="/logo.png" alt="Logo" width={40} height={40} />{" "}
+          <span className="text-xl font-bold">Agrivaulture</span>
         </SidebarMenuButton>
       </SidebarHeader>
 
@@ -69,7 +62,8 @@ export default function AdminSidebar() {
           {navigationItems.map((item) => {
             const isActive =
               pathname === item.path ||
-              (item.path !== '/admin-dashboard' && pathname?.startsWith(item.path));
+              (item.path !== "/admin-dashboard" &&
+                pathname?.startsWith(item.path));
             return (
               <SidebarMenuItem key={item.path}>
                 <SidebarMenuButton
@@ -78,14 +72,14 @@ export default function AdminSidebar() {
                   tooltip={item.name}
                   className={`px-4 py-3 gap-4 hover:bg-sidebar-foreground/10 transition-colors ${
                     isActive
-                      ? 'bg-sidebar-primary/10 text-sidebar-primary font-medium border-l-4 border-sidebar-primary'
-                      : 'text-sidebar-foreground/90'
+                      ? "bg-sidebar-primary/10 text-sidebar-primary font-medium border-l-4 border-sidebar-primary"
+                      : "text-sidebar-foreground/90"
                   }`}
                 >
                   <Link href={item.path} className="flex items-center w-full">
                     <item.icon
                       className={`h-6 w-6 ${
-                        isActive ? 'text-sidebar-primary' : ''
+                        isActive ? "text-sidebar-primary" : ""
                       }`}
                     />
                     <span className="ml-3">{item.name}</span>
