@@ -151,6 +151,7 @@ const Hero = () => {
         </motion.div>
       </div>
 
+      {/* Animated scroll indicator */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: [0, 1, 1, 0], y: [0, 10, 10, 20] }}
