@@ -53,7 +53,7 @@ app.use(rateLimiter as express.RequestHandler);
 app.use("/api/v1", routes);
 app.use(errorHandler);
 
-const port = ENV.PORT || 3000;
+const port = ENV.PORT || 8080;
 app.listen(port, () => {
   console.log(`App is listening on http://localhost:${port}`);
 });
