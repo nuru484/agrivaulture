@@ -1,23 +1,12 @@
-import { Request, Response, NextFunction } from 'express';
-import prisma from '../config/prismaClient';
+import { Request, Response, NextFunction } from "express";
+import prisma from "../config/prismaClient";
 import {
   asyncHandler,
   NotFoundError,
   UnauthorizedError,
-} from '../middlewares/error-handler';
-import { HTTP_STATUS_CODES } from '../config/constants';
-import { Role } from 'generated/prisma';
-
-interface IUserResponse {
-  id: string;
-  name: string;
-  email: string | null;
-  phone: string;
-  role: Role;
-  region: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+} from "../middlewares/error-handler";
+import { HTTP_STATUS_CODES } from "../config/constants";
+import { IUserResponseData } from "types/user-profile.types";
 
 /**
  * Get total number of users
@@ -25,14 +14,14 @@ interface IUserResponse {
 const getTotalUsers = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user?.id;
-    if (!userId || req.user?.role !== 'ADMIN') {
-      throw new UnauthorizedError('Unauthorized, admin access required');
+    if (!userId || req.user?.role !== "ADMIN") {
+      throw new UnauthorizedError("Unauthorized, admin access required");
     }
 
     const totalUsers = await prisma.user.count();
 
     res.status(HTTP_STATUS_CODES.OK).json({
-      message: 'Total users retrieved successfully',
+      message: "Total users retrieved successfully",
       data: { total: totalUsers },
     });
   }
@@ -44,8 +33,8 @@ const getTotalUsers = asyncHandler(
 const getUsersList = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user?.id;
-    if (!userId || req.user?.role !== 'ADMIN') {
-      throw new UnauthorizedError('Unauthorized, admin access required');
+    if (!userId || req.user?.role !== "ADMIN") {
+      throw new UnauthorizedError("Unauthorized, admin access required");
     }
 
     const users = await prisma.user.findMany({
@@ -56,17 +45,25 @@ const getUsersList = asyncHandler(
         phone: true,
         role: true,
         region: true,
+        city: true,
+        address: true,
+        bio: true,
+        profilePicture: true,
         createdAt: true,
         updatedAt: true,
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
 
-    const response: IUserResponse[] = users.map((user) => ({
+    const response: IUserResponseData[] = users.map((user) => ({
       id: user.id,
       name: user.name,
       email: user.email,
       phone: user.phone,
+      city: user.city,
+      profilePicture: user.profilePicture,
+      bio: user.bio,
+      address: user.address,
       role: user.role,
       region: user.region,
       createdAt: user.createdAt,
@@ -74,7 +71,7 @@ const getUsersList = asyncHandler(
     }));
 
     res.status(HTTP_STATUS_CODES.OK).json({
-      message: 'Users list retrieved successfully',
+      message: "Users list retrieved successfully",
       data: response,
     });
   }
@@ -84,21 +81,17 @@ const getUsersList = asyncHandler(
  * Update user role
  */
 const updateUserRole = asyncHandler(
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { id } = req.params;
     const { role } = req.body;
     const userId = req.user?.id;
 
-    if (!userId || req.user?.role !== 'ADMIN') {
-      throw new UnauthorizedError('Unauthorized, admin access required');
+    if (!userId || req.user?.role !== "ADMIN") {
+      throw new UnauthorizedError("Unauthorized, admin access required");
     }
 
-    if (!['FARMER', 'ADMIN'].includes(role)) {
-      throw new NotFoundError('Invalid role provided');
+    if (!["FARMER", "ADMIN"].includes(role)) {
+      throw new NotFoundError("Invalid role provided");
     }
 
     const user = await prisma.user.findUnique({
@@ -106,7 +99,7 @@ const updateUserRole = asyncHandler(
     });
 
     if (!user) {
-      throw new NotFoundError('User not found');
+      throw new NotFoundError("User not found");
     }
 
     const updatedUser = await prisma.user.update({
@@ -114,11 +107,15 @@ const updateUserRole = asyncHandler(
       data: { role },
     });
 
-    const response: IUserResponse = {
+    const response: IUserResponseData = {
       id: updatedUser.id,
       name: updatedUser.name,
       email: updatedUser.email,
       phone: updatedUser.phone,
+      city: updatedUser.city,
+      profilePicture: updatedUser.profilePicture,
+      bio: updatedUser.bio,
+      address: updatedUser.address,
       role: updatedUser.role,
       region: updatedUser.region,
       createdAt: updatedUser.createdAt,
@@ -126,7 +123,7 @@ const updateUserRole = asyncHandler(
     };
 
     res.status(HTTP_STATUS_CODES.OK).json({
-      message: 'User role updated successfully',
+      message: "User role updated successfully",
       data: response,
     });
   }
@@ -140,8 +137,8 @@ const deleteUser = asyncHandler(
     const { id } = req.params;
     const userId = req.user?.id;
 
-    if (!userId || req.user?.role !== 'ADMIN') {
-      throw new UnauthorizedError('Unauthorized, admin access required');
+    if (!userId || req.user?.role !== "ADMIN") {
+      throw new UnauthorizedError("Unauthorized, admin access required");
     }
 
     const user = await prisma.user.findUnique({
@@ -149,7 +146,7 @@ const deleteUser = asyncHandler(
     });
 
     if (!user) {
-      throw new NotFoundError('User not found');
+      throw new NotFoundError("User not found");
     }
 
     await prisma.user.delete({
@@ -157,14 +154,9 @@ const deleteUser = asyncHandler(
     });
 
     res.status(HTTP_STATUS_CODES.OK).json({
-      message: 'User deleted successfully',
+      message: "User deleted successfully",
     });
   }
 );
 
-export {
-  getTotalUsers,
-  getUsersList,
-  updateUserRole,
-  deleteUser,
-};
+export { getTotalUsers, getUsersList, updateUserRole, deleteUser };

@@ -1,18 +1,19 @@
-import { ICloudinaryUploadResult } from './cloudinary.types';
+import { ICloudinaryUploadResult } from "./cloudinary.types";
+import { Role } from "generated/prisma";
 
 export enum UserRole {
-  ADMIN = 'ADMIN',
-  FARMER = 'FARMER',
+  ADMIN = "ADMIN",
+  FARMER = "FARMER",
 }
 
 export interface IUserProfile {
   id: string;
   name: string;
   email: string;
-  role: UserRole;
+  role: Role;
   region: string;
   phone: string;
-    city: string;
+  city: string;
   profilePicture?: string;
   bio: string;
   address: string;
@@ -25,19 +26,32 @@ export interface IUserRegistrationInput {
   password: string;
   region: string;
   name: string;
-  role: UserRole; 
+  role: UserRole;
   phone: string;
 }
 
 export interface IUserResponseData {
-  region: string;
-    city: string;
-  email: string;
+  id: string;
   name: string;
-  role: UserRole;
+  email?: string | null;
   phone: string;
-  profilePicture?: string;
-  bio: string;
-  address: string;
-  uploadResult?: ICloudinaryUploadResult;
+  city?: string | null;
+  profilePicture?: string | null;
+  bio?: string | null;
+  address?: string | null;
+  role: Role;
+  region?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface IUserResponse {
+  id: string;
+  name: string;
+  email: string | null;
+  phone: string;
+  role: Role;
+  region: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

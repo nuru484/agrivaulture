@@ -24,6 +24,11 @@ const ENV = {
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
   REFRESH_TOKEN_EXPIRY: process.env.REFRESH_TOKEN_EXPIRY,
   COOKIE_DOMAIN: process.env.COOKIE_DOMAIN,
+
+  ADMIN_EMAIL: assertEnv(process.env.ADMIN_EMAIL, "ADMIN_EMAIL"),
+  ADMIN_PASSWORD: assertEnv(process.env.ADMIN_PASSWORD, "ADMIN_PASSWORD"),
+  ADMIN_NAME: assertEnv(process.env.ADMIN_NAME, "ADMIN_NAME"),
+  ADMIN_PHONE: assertEnv(process.env.ADMIN_PHONE, "ADMIN_PHONE"),
 };
 
 export default ENV;
