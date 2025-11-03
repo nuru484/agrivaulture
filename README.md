@@ -230,7 +230,8 @@ SOFTWARE.
 
 ## 🧠 Author
 
-* Developer: **Nurudeen Abdul-Majeed**
-* Email: **[abdulmajeednurudeen47@gmail.com](mailto:abdulmajeednurudeen47@gmail.com)**
+**Developer:** Nurudeen Abdul-Majeed  
+
+**Email:** [abdulmajeednurudeen47@gmail.com](mailto:abdulmajeednurudeen47@gmail.com)  
 
 ---
