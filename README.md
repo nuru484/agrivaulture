@@ -185,32 +185,46 @@ Hosted on **Render**, with managed PostgreSQL + Cloudinary for media.
 
 ## 🤝 Contributing
 
-This project is private and proprietary.
-External contributions, forks, or pull requests are **not permitted**.
+Contributions are welcome! If you'd like to improve this project, feel free to:
 
-Any form of development, feature enhancement, or source code modification requires **prior authorization** or **purchase of ownership rights**.
+- **Fork** the repository
+- **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+- **Commit your changes** (`git commit -m 'Add some amazing feature'`)
+- **Push to the branch** (`git push origin feature/amazing-feature`)
+- **Open a Pull Request**
 
-💼 For collaboration or licensing inquiries, please contact:
-📧 **[abdulmajeednurudeen47@gmail.com](mailto:abdulmajeednurudeen47@gmail.com)**
+Please ensure your code follows the project's style guidelines and includes appropriate tests where applicable.
+
+For major changes, please open an issue first to discuss what you would like to change.
+
+📩 Questions or suggestions?
+**[abdulmajeednurudeen47@gmail.com](mailto:abdulmajeednurudeen47@gmail.com)**
 
 ---
 
 ## 🧾 License
 
-**All Rights Reserved**
+**MIT License**
 
-The entire codebase and intellectual property belong exclusively to:
-**Nurudeen Abdul-Majeed**
+Copyright (c) 2025 Nurudeen Abdul-Majeed
 
-Usage of any part of this project, including but not limited to:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-* copying
-* distribution
-* reverse-engineering
-* commercial deployment
-* derivative works
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-is strictly prohibited without explicit permission or purchase of licensing rights.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ---
 
